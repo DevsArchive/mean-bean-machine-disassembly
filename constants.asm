@@ -1,102 +1,159 @@
-BGM_PROTO_TITLE: equ 1
-BGM_MENU:	 equ 2
-BGM_FINAL_INTRO: equ 3
-BGM_DANGER:	 equ 4
-BGM_STAGE_1:	 equ 5
-BGM_FINAL_STAGE: equ 6
-BGM_STAGE_3:	 equ 7
-BGM_FINAL_WIN:	 equ 8
-BGM_GAME_OVER:	 equ 9
-BGM_ROLE_CALL:	 equ $A
-BGM_CREDITS:	 equ $B
-BGM_PUYO_WIN:	 equ $C
-BGM_SILENCE:	 equ $D
-BGM_PASSWORD:	 equ $E
-BGM_PUYO_BRAVE:	 equ $F
-BGM_PUYO_THEME:	 equ $10
-BGM_EXERCISE:	 equ $11
-BGM_VERSUS:	 equ $12
-BGM_STAGE_2:	 equ $13
-BGM_FINAL_DANGER: equ $14
-BGM_UNKNOWN:	 equ $15
-BGM_INTRO_3:	 equ $16
-BGM_INTRO_1:	 equ $17
-BGM_INTRO_2:	 equ $18
-BGM_WIN:	 equ $19
-BGM_TITLE:	 equ $1A
-SFX_MENU_SELECT: equ $41
-SFX_MENU_MOVE:	 equ $42
-SFX_PUYO_MOVE:	 equ $43
-SFX_PUYO_ROTATE: equ $44
-SFX_PUYO_LAND:	 equ $45
-SFX_46:		 equ $46
-SFX_47:		 equ $47
-SFX_PUYO_LAND_HARD: equ	$48
-SFX_49:		 equ $49
-SFX_4A:		 equ $4A
-SFX_4B:		 equ $4B
-SFX_PUYO_POP_1:	 equ $4C
-SFX_PUYO_POP_2:	 equ $4D
-SFX_PUYO_POP_3:	 equ $4E
-SFX_PUYO_POP_4:	 equ $4F
-SFX_PUYO_POP_5:	 equ $50
-SFX_PUYO_POP_6:	 equ $51
-SFX_PUYO_POP_7:	 equ $52
-SFX_53:		 equ $53
-SFX_GARBAGE_1:	 equ $54
-SFX_GARBAGE_2:	 equ $55
-SFX_GARBAGE_3:	 equ $56
-SFX_57:		 equ $57
-SFX_58:		 equ $58
-SFX_LOSE:	 equ $59
-SFX_5A:		 equ $5A
-SFX_5B:		 equ $5B
-SFX_5C:		 equ $5C
-SFX_5D:		 equ $5D
-SFX_5E:		 equ $5E
-SFX_5F:		 equ $5F
-SFX_60:		 equ $60
-SFX_61:		 equ $61
-SFX_62:		 equ $62
-SFX_LEVEL_START: equ $63
-SFX_64:		 equ $64
-SFX_65:		 equ $65
-SFX_66:		 equ $66
-SFX_67:		 equ $67
-SFX_68:		 equ $68
-SFX_69:		 equ $69
-SFX_6A:		 equ $6A
-SFX_ROBOTNIK_LAUGH: equ	$6B
-SFX_6C:		 equ $6C
-SFX_ROBOTNIK_LAUGH_2: equ $6D
-SFX_GARBAGE_4:	 equ $6E
-SFX_STOP:	 equ $6F
-SFX_70:		 equ $70
-SFX_71:		 equ $71
-SFX_72:		 equ $72
-VOI_P1_COMBO_1:	 equ $81
-VOI_P1_COMBO_2:	 equ $82
-VOI_P1_COMBO_3:	 equ $83
-VOI_P1_COMBO_4:	 equ $84
-VOI_P2_COMBO_1:	 equ $85
-VOI_P2_COMBO_2:	 equ $86
-VOI_87:		 equ $87
-VOI_GARBAGE_1:	 equ $88
-VOI_GARBAGE_2:	 equ $89
-VOI_GARBAGE_3:	 equ $8A
-VOI_8B:		 equ $8B
-VOI_8C:		 equ $8C
-VOI_P2_COMBO_3:	 equ $8D
-VOI_P2_COMBO_4:	 equ $8E
-VOI_8F:		 equ $8F
-VOI_ROBOTNIK_LOSE: equ $90
-VOI_91:		 equ $91
-VOI_THUNDER_1:	 equ $92
-VOI_THUNDER_2:	 equ $93
-VOI_THUNDER_3:	 equ $94
-VOI_THUNDER_4:	 equ $95
-VOI_96:		 equ $96
-VOI_VANISH:	 equ $97
-SND_FADE_OUT:	 equ $FD
-BGM_STOP:	 equ $FE
-SND_PAUSE:	 equ $FF
+
+; --------------------------------------------------------------
+;
+;	Dr. Robotnik's Mean Bean Machine Disassembly
+;	Original game by Compile
+;
+;	Disassembled by Ralakimus
+;
+; --------------------------------------------------------------
+
+; --------------------------------------------------------------
+; Music IDs
+; --------------------------------------------------------------
+
+	rsset	1
+BGM_PROTO_TITLE		rs.b	1
+BGM_MENU		rs.b	1
+BGM_FINAL_INTRO		rs.b	1
+BGM_DANGER		rs.b	1
+BGM_STAGE_1		rs.b	1
+BGM_FINAL_STAGE		rs.b	1
+BGM_STAGE_3		rs.b	1
+BGM_FINAL_WIN		rs.b	1
+BGM_GAME_OVER		rs.b	1
+BGM_ROLE_CALL		rs.b	1
+BGM_CREDITS		rs.b	1
+BGM_PUYO_WIN		rs.b	1
+BGM_SILENCE		rs.b	1
+BGM_PASSWORD		rs.b	1
+BGM_PUYO_BRAVE		rs.b	1
+BGM_PUYO_THEME		rs.b	1
+BGM_EXERCISE		rs.b	1
+BGM_VERSUS		rs.b	1
+BGM_STAGE_2		rs.b	1
+BGM_FINAL_DANGER	rs.b	1
+BGM_UNKNOWN		rs.b	1
+BGM_INTRO_3		rs.b	1
+BGM_INTRO_1		rs.b	1
+BGM_INTRO_2		rs.b	1
+BGM_WIN			rs.b	1
+BGM_TITLE		rs.b	1
+
+; --------------------------------------------------------------
+; SFX IDs
+; --------------------------------------------------------------
+
+	rsset	$41
+SFX_MENU_SELECT		rs.b	1
+SFX_MENU_MOVE		rs.b	1
+SFX_PUYO_MOVE		rs.b	1
+SFX_PUYO_ROTATE		rs.b	1
+SFX_PUYO_LAND		rs.b	1
+SFX_46			rs.b	1
+SFX_47			rs.b	1
+SFX_PUYO_LAND_HARD	rs.b	1
+SFX_49			rs.b	1
+SFX_4A			rs.b	1
+SFX_4B			rs.b	1
+SFX_PUYO_POP_1		rs.b	1
+SFX_PUYO_POP_2		rs.b	1
+SFX_PUYO_POP_3		rs.b	1
+SFX_PUYO_POP_4		rs.b	1
+SFX_PUYO_POP_5		rs.b	1
+SFX_PUYO_POP_6		rs.b	1
+SFX_PUYO_POP_7		rs.b	1
+SFX_53			rs.b	1
+SFX_GARBAGE_1		rs.b	1
+SFX_GARBAGE_2		rs.b	1
+SFX_GARBAGE_3		rs.b	1
+SFX_57			rs.b	1
+SFX_58			rs.b	1
+SFX_LOSE		rs.b	1
+SFX_5A			rs.b	1
+SFX_5B			rs.b	1
+SFX_5C			rs.b	1
+SFX_5D			rs.b	1
+SFX_5E			rs.b	1
+SFX_5F			rs.b	1
+SFX_60			rs.b	1
+SFX_61			rs.b	1
+SFX_62			rs.b	1
+SFX_LEVEL_START 	rs.b	1
+SFX_64			rs.b	1
+SFX_65			rs.b	1
+SFX_66			rs.b	1
+SFX_67			rs.b	1
+SFX_68			rs.b	1
+SFX_69			rs.b	1
+SFX_6A			rs.b	1
+SFX_ROBOTNIK_LAUGH	rs.b	1
+SFX_6C			rs.b	1
+SFX_ROBOTNIK_LAUGH_2	rs.b	1
+SFX_GARBAGE_4		rs.b	1
+SFX_STOP		rs.b	1
+SFX_70			rs.b	1
+SFX_71			rs.b	1
+SFX_72			rs.b	1
+
+; --------------------------------------------------------------
+; Voice IDs
+; --------------------------------------------------------------
+
+	rsset	$81
+VOI_P1_COMBO_1		rs.b	1
+VOI_P1_COMBO_2		rs.b	1
+VOI_P1_COMBO_3		rs.b	1
+VOI_P1_COMBO_4		rs.b	1
+VOI_P2_COMBO_1		rs.b	1
+VOI_P2_COMBO_2		rs.b	1
+VOI_87			rs.b	1
+VOI_GARBAGE_1		rs.b	1
+VOI_GARBAGE_2		rs.b	1
+VOI_GARBAGE_3		rs.b	1
+VOI_8B			rs.b	1
+VOI_8C			rs.b	1
+VOI_P2_COMBO_3		rs.b	1
+VOI_P2_COMBO_4		rs.b	1
+VOI_8F			rs.b	1
+VOI_ROBOTNIK_LOSE	rs.b	1
+VOI_91			rs.b	1
+VOI_THUNDER_1		rs.b	1
+VOI_THUNDER_2		rs.b	1
+VOI_THUNDER_3		rs.b	1
+VOI_THUNDER_4		rs.b	1
+VOI_96			rs.b	1
+VOI_VANISH		rs.b	1
+
+; --------------------------------------------------------------
+; Sound command IDs
+; --------------------------------------------------------------
+
+	rsset	$FD
+SND_FADE_OUT		rs.b	1
+BGM_STOP		rs.b	1
+SND_PAUSE		rs.b	1
+
+; --------------------------------------------------------------
+; Opponent IDs
+; --------------------------------------------------------------
+
+	rsreset
+OPP_SKELETON		rs.b	1
+OPP_FRANKLY		rs.b	1
+OPP_DYNAMIGHT		rs.b	1
+OPP_ARMS		rs.b	1
+OPP_NASU_GRAVE		rs.b	1
+OPP_GROUNDER		rs.b	1
+OPP_DAVY		rs.b	1
+OPP_COCONUTS		rs.b	1
+OPP_SPIKE		rs.b	1
+OPP_SIR_FFUZZY		rs.b	1
+OPP_DRAGON		rs.b	1
+OPP_SCRATCH		rs.b	1
+OPP_ROBOTNIK		rs.b	1
+OPP_MUMMY		rs.b	1
+OPP_HUMPTY		rs.b	1
+OPP_SKWEEL		rs.b	1
+
+; --------------------------------------------------------------

@@ -2484,7 +2484,7 @@ Bytecode:
 
 BC_Checksum:
 		BRUN	InitPalette_Safe
-		BRUN	loc_279E
+		BRUN	InitDebugFlags
 		BRUN	CheckChecksum
 		BJCLR	BC_Sega
 		BVDP	1
@@ -2768,7 +2768,7 @@ BC_LevelIntro:
 		BRUN	LoadOpponentIntro
 		BRUN	SetupLevelTransition
 		BRUN	LoadLevelIntro
-		BRUN	loc_2692
+		BRUN	PlayLevelIntroMusic
 		BFRMEND
 		BRUN	LoadLevelIntroArt
 		BFRMEND
@@ -3269,30 +3269,31 @@ stru_25F8:
 		BJMP	BC_Sega
 ; ---------------------------------------------------------------------------
 
-loc_2692:
+PlayLevelIntroMusic:
 		clr.w	d1
 		move.b	(level).l,d1
-		move.b	unk_26A4(pc,d1.w),d0
+		move.b	LevelIntroMusicIDs(pc,d1.w),d0
 		jmp	(JmpTo_PlaySound).l
 ; ---------------------------------------------------------------------------
-unk_26A4:	dc.b   0
-		dc.b   0
-		dc.b   0
-		dc.b $17
-		dc.b $17
-		dc.b $17
-		dc.b $17
-		dc.b $18
-		dc.b $18
-		dc.b $18
-		dc.b $18
-		dc.b $16
-		dc.b $16
-		dc.b $16
-		dc.b $16
-		dc.b   3
-		dc.b   0
-		dc.b   0
+LevelIntroMusicIDs:
+		dc.b 0
+		dc.b 0
+		dc.b 0
+		dc.b BGM_INTRO_1
+		dc.b BGM_INTRO_1
+		dc.b BGM_INTRO_1
+		dc.b BGM_INTRO_1
+		dc.b BGM_INTRO_2
+		dc.b BGM_INTRO_2
+		dc.b BGM_INTRO_2
+		dc.b BGM_INTRO_2
+		dc.b BGM_INTRO_3
+		dc.b BGM_INTRO_3
+		dc.b BGM_INTRO_3
+		dc.b BGM_INTRO_3
+		dc.b BGM_FINAL_INTRO
+		dc.b 0
+		dc.b 0
 ; ---------------------------------------------------------------------------
 ; START	OF FUNCTION CHUNK FOR sub_3A00
 
@@ -3310,7 +3311,8 @@ PlayLevelMusic:
 		jmp	(JmpTo_PlaySound).l
 ; END OF FUNCTION CHUNK	FOR sub_3A00
 ; ---------------------------------------------------------------------------
-LevelMusicIDs:	dc.b 0
+LevelMusicIDs:
+		dc.b 0
 		dc.b 0
 		dc.b 0
 		dc.b BGM_STAGE_1
@@ -3330,37 +3332,39 @@ LevelMusicIDs:	dc.b 0
 		dc.b 0
 ; ---------------------------------------------------------------------------
 
-loc_26EC:
+PlayLevelWinMusic:
 		clr.w	d1
 		move.b	(level).l,d1
-		move.b	unk_2710(pc,d1.w),d0
+		move.b	LevelWinMusicIDs(pc,d1.w),d0
 		cmp.b	(cur_level_music).l,d0
-		bne.w	loc_2704
+		bne.w	.NewID
 		rts
 ; ---------------------------------------------------------------------------
 
-loc_2704:
+.NewID:
 		move.b	d0,(cur_level_music).l
 		jmp	(JmpTo_PlaySound).l
 ; ---------------------------------------------------------------------------
-unk_2710:	dc.b   0
-		dc.b   0
-		dc.b   0
-		dc.b $19
-		dc.b $19
-		dc.b $19
-		dc.b $19
-		dc.b $19
-		dc.b $19
-		dc.b $19
-		dc.b $19
-		dc.b $19
-		dc.b $19
-		dc.b $19
-		dc.b $19
-		dc.b   8
-		dc.b   0
-		dc.b   0
+
+LevelWinMusicIDs:
+		dc.b 0
+		dc.b 0
+		dc.b 0
+		dc.b BGM_WIN
+		dc.b BGM_WIN
+		dc.b BGM_WIN
+		dc.b BGM_WIN
+		dc.b BGM_WIN
+		dc.b BGM_WIN
+		dc.b BGM_WIN
+		dc.b BGM_WIN
+		dc.b BGM_WIN
+		dc.b BGM_WIN
+		dc.b BGM_WIN
+		dc.b BGM_WIN
+		dc.b BGM_FINAL_WIN
+		dc.b 0
+		dc.b 0
 
 ; =============== S U B	R O U T	I N E =======================================
 
@@ -3410,34 +3414,35 @@ SetOpponent:
 .GetOpponentID:
 		move.b	d0,(bytecode_flag).l
 		move.b	(level).l,d0
-		lea	(opponents).l,a1
+		lea	(Opponents).l,a1
 		move.b	(a1,d0.w),(opponent).l
 		rts
 ; End of function SetOpponent
 
 ; ---------------------------------------------------------------------------
-opponents:	dc.b 0
-		dc.b 4
-		dc.b $D
-		dc.b 3
-		dc.b 1
-		dc.b $E
-		dc.b 7
-		dc.b 6
-		dc.b $F
-		dc.b 2
-		dc.b 5
-		dc.b 8
-		dc.b 9
-		dc.b $A
-		dc.b $B
-		dc.b $C
+Opponents:
+		dc.b OPP_SKELETON	; Puyo Puyo leftover
+		dc.b OPP_NASU_GRAVE	; Puyo Puyo leftover
+		dc.b OPP_MUMMY		; Puyo Puyo leftover
+		dc.b OPP_ARMS
+		dc.b OPP_FRANKLY
+		dc.b OPP_HUMPTY
+		dc.b OPP_COCONUTS
+		dc.b OPP_DAVY
+		dc.b OPP_SKWEEL
+		dc.b OPP_DYNAMIGHT
+		dc.b OPP_GROUNDER
+		dc.b OPP_SPIKE
+		dc.b OPP_SIR_FFUZZY
+		dc.b OPP_DRAGON
+		dc.b OPP_SCRATCH
+		dc.b OPP_ROBOTNIK
 ; ---------------------------------------------------------------------------
 
-loc_279E:
-		move.b	#$FF,(byte_FF1958).l
-		move.b	#0,(byte_FF1959).l
-		move.b	#0,(byte_FF195A).l
+InitDebugFlags:
+		move.b	#$FF,(control_player_1).l
+		move.b	#0,(control_puyo_drop).l
+		move.b	#0,(skip_scenario_stages).l
 		move.b	#0,(byte_FF195B).l
 		rts
 ; ---------------------------------------------------------------------------
@@ -4226,12 +4231,12 @@ loc_390E:
 
 
 PuyoLandEffects:
-		cmpi.b	#1,(opponent).l
-		beq.s	loc_3930
-		cmpi.b	#$A,(opponent).l
+		cmpi.b	#OPP_FRANKLY,(opponent).l
+		beq.s	.Shake
+		cmpi.b	#OPP_DRAGON,(opponent).l
 		bne.w	PlayPuyoLandSound
 
-loc_3930:
+.Shake:
 		tst.b	aField2A(a0)
 		beq.w	PlayPuyoLandSound
 		move.b	#SFX_PUYO_LAND_HARD,d0
@@ -4281,7 +4286,7 @@ loc_398A:
 
 PlayPuyoLandSound:
 		move.b	#SFX_PUYO_LAND,d0
-		cmpi.b	#$C,(opponent).l
+		cmpi.b	#OPP_ROBOTNIK,(opponent).l
 		bne.w	loc_39C6
 		move.b	#SFX_PUYO_LAND,d0
 
@@ -4294,7 +4299,7 @@ loc_39C6:
 
 PlayPuyoMoveSound:
 		move.b	#SFX_PUYO_MOVE,d0
-		cmpi.b	#$C,(opponent).l
+		cmpi.b	#OPP_ROBOTNIK,(opponent).l
 		bne.w	loc_39E0
 		move.b	#SFX_PUYO_MOVE,d0
 
@@ -4306,7 +4311,7 @@ loc_39E0:
 
 PlayPuyoRotateSound:
 		move.b	#SFX_PUYO_ROTATE,d0
-		cmpi.b	#$C,(opponent).l
+		cmpi.b	#OPP_ROBOTNIK,(opponent).l
 		bne.w	loc_39FA
 		move.b	#SFX_PUYO_ROTATE,d0
 
@@ -4711,13 +4716,13 @@ loc_3DDE:
 		lea	(byte_FF1D0A).l,a1
 		clr.b	(a1,d0.w)
 		jsr	(sub_127BA).l
-		tst.b	(byte_FF1959).l
+		tst.b	(control_puyo_drop).l
 		beq.w	loc_3E40
 		jsr	(nullsub_4).l
 
 loc_3E40:
 		bsr.w	ActorBookmark
-		tst.b	(byte_FF1959).l
+		tst.b	(control_puyo_drop).l
 		beq.w	loc_3E5C
 		bsr.w	sub_56C0
 		btst	#5,d0
@@ -7279,7 +7284,7 @@ sub_56C0:
 		lsl.b	#1,d2
 		or.b	$2A(a0),d2
 		eori.b	#1,d2
-		and.b	(byte_FF1958).l,d2
+		and.b	(control_player_1).l,d2
 		bne.w	loc_570C
 
 loc_5706:
@@ -7301,7 +7306,7 @@ sub_5712:
 		lsl.b	#1,d2
 		or.b	$2A(a0),d2
 		eori.b	#1,d2
-		and.b	(byte_FF1958).l,d2
+		and.b	(control_player_1).l,d2
 		beq.w	locret_5778
 		movem.l	a2-a3,-(sp)
 		clr.w	d1
@@ -8292,7 +8297,7 @@ sub_604E:
 		move.w	#1,(word_FF1124).l
 		move.w	#$D688,d3
 		move.w	#$C000,d2
-		cmpi.b	#$C,(opponent).l
+		cmpi.b	#OPP_ROBOTNIK,(opponent).l
 		beq.s	loc_6080
 		move.w	#$6000,d0
 		bra.w	loc_6084
@@ -10947,7 +10952,7 @@ loc_7BA0:
 		bsr.w	sub_7292
 		bsr.w	sub_7078
 		bsr.w	sub_7BD8
-		jmp	(loc_26EC).l
+		jmp	(PlayLevelWinMusic).l
 ; ---------------------------------------------------------------------------
 
 loc_7BB6:
@@ -10964,7 +10969,7 @@ loc_7BB6:
 
 sub_7BD8:
 		move.b	(opponent).l,d0
-		cmpi.b	#$C,d0
+		cmpi.b	#OPP_ROBOTNIK,d0
 		bne.s	locret_7C12
 		lea	(loc_7BF0).l,a1
 		jmp	(FindActorSlotQuick).l
@@ -10990,7 +10995,7 @@ locret_7C12:
 
 sub_7C14:
 		move.b	(opponent).l,d0
-		cmpi.b	#$C,d0
+		cmpi.b	#OPP_ROBOTNIK,d0
 		bne.s	locret_7C4E
 		lea	(loc_7C2C).l,a1
 		jmp	(FindActorSlotQuick).l
@@ -11022,7 +11027,7 @@ loc_7C50:
 		bsr.w	ActorDeleteOther
 		move.b	#$59,d0
 		jsr	(PlaySound_ChkPCM).l
-		move.b	#3,(opponent).l
+		move.b	#OPP_ARMS,(opponent).l
 		clr.w	d0
 		move.b	$2A(a0),d0
 		eori.b	#1,d0
@@ -13400,7 +13405,7 @@ locret_9306:
 
 sub_9308:
 		move.b	#4,(level).l
-		move.b	#3,(opponent).l
+		move.b	#OPP_ARMS,(opponent).l
 		move.b	(game_matches).l,d0
 		bne.w	loc_9324
 		addq.b	#1,d0
@@ -16056,7 +16061,7 @@ unk_A90A:	dc.b   7
 LoadOpponentIntro:
 		clr.l	d0
 		move.b	(opponent).l,d0
-		cmpi.b	#3,d0
+		cmpi.b	#OPP_ARMS,d0
 		bne.s	.ChkRobotnik
 		lea	(ArtNem_ArmsIntro2).l,a0
 		move.w	#$6000,d0
@@ -16092,7 +16097,7 @@ LoadOpponentIntro:
 		move.b	(opponent).l,d0
 		move.b	d0,d1
 		addi.b	#9,d1
-		cmpi.b	#$15,d1
+		cmpi.b	#OPP_ROBOTNIK+9,d1
 		bne.s	loc_A9B0
 		move.b	#$2B,d1
 		lea	(ActRobotnikIntro).l,a1
@@ -18462,7 +18467,7 @@ loc_BDFE:
 		move.b	#$80,6(a0)
 		move.w	#$220,$A(a0)
 		move.w	#$D8,$E(a0)
-		move.b	#1,(opponent).l
+		move.b	#OPP_FRANKLY,(opponent).l
 		move.w	#$28,$26(a0)
 		jsr	(ActorBookmark).l
 		move.w	#$B7,d0
@@ -23903,22 +23908,22 @@ loc_F0F4:
 		move.b	(a1,d0.w),(opponent).l
 		jmp	(ActorDeleteSelf).l
 ; ---------------------------------------------------------------------------
-byte_F12A:	dc.b 0
-		dc.b 4
-		dc.b $D
-		dc.b 3
-		dc.b 1
-		dc.b $E
-		dc.b 7
-		dc.b 6
-		dc.b $F
-		dc.b 2
-		dc.b 5
-		dc.b 8
-		dc.b 9
-		dc.b $A
-		dc.b $B
-		dc.b $C
+byte_F12A:	dc.b OPP_SKELETON
+		dc.b OPP_NASU_GRAVE
+		dc.b OPP_MUMMY
+		dc.b OPP_ARMS
+		dc.b OPP_FRANKLY
+		dc.b OPP_HUMPTY
+		dc.b OPP_COCONUTS
+		dc.b OPP_DAVY
+		dc.b OPP_SKWEEL
+		dc.b OPP_DYNAMIGHT
+		dc.b OPP_GROUNDER
+		dc.b OPP_SPIKE
+		dc.b OPP_SIR_FFUZZY
+		dc.b OPP_DRAGON
+		dc.b OPP_SCRATCH
+		dc.b OPP_ROBOTNIK
 
 ; =============== S U B	R O U T	I N E =======================================
 
@@ -26669,7 +26674,7 @@ locret_104F0:
 sub_104F2:
 		movem.l	a0,-(sp)
 		move.b	(opponent).l,d0
-		cmpi.b	#3,d0
+		cmpi.b	#OPP_ARMS,d0
 		bne.s	loc_10520
 		lea	(ArtNem_ArmsIntro2).l,a0
 		move.w	#$600,d0
@@ -26682,7 +26687,7 @@ sub_104F2:
 loc_10520:
 		clr.l	d0
 		move.b	(opponent).l,d0
-		cmpi.b	#$C,d0
+		cmpi.b	#OPP_ROBOTNIK,d0
 		beq.s	loc_1054C
 		lsl.w	#2,d0
 		lea	(OpponentArt).l,a1
@@ -26698,7 +26703,7 @@ loc_1054C:
 		move.b	(opponent).l,d0
 		move.b	d0,d1
 		addi.b	#9,d1
-		cmpi.b	#$15,d1
+		cmpi.b	#OPP_ROBOTNIK+9,d1
 		bne.s	loc_1057A
 		move.b	#$2B,d1
 		lea	(loc_10712).l,a1
@@ -27003,22 +27008,22 @@ sub_10800:
 
 ; ---------------------------------------------------------------------------
 unk_10822:	dc.b $10
-		dc.b   0
-		dc.b   4
-		dc.b  $D
-		dc.b   3
-		dc.b   1
-		dc.b  $E
-		dc.b   7
-		dc.b   6
-		dc.b  $F
-		dc.b   2
-		dc.b   5
-		dc.b   8
-		dc.b   9
-		dc.b  $A
-		dc.b  $B
-		dc.b  $C
+		dc.b OPP_SKELETON
+		dc.b OPP_NASU_GRAVE
+		dc.b OPP_MUMMY
+		dc.b OPP_ARMS
+		dc.b OPP_FRANKLY
+		dc.b OPP_HUMPTY
+		dc.b OPP_COCONUTS
+		dc.b OPP_DAVY
+		dc.b OPP_SKWEEL
+		dc.b OPP_DYNAMIGHT
+		dc.b OPP_GROUNDER
+		dc.b OPP_SPIKE
+		dc.b OPP_SIR_FFUZZY
+		dc.b OPP_DRAGON
+		dc.b OPP_SCRATCH
+		dc.b OPP_ROBOTNIK
 		dc.b $11
 ; ---------------------------------------------------------------------------
 
@@ -27095,7 +27100,7 @@ sub_1093A:
 		cmpi.b	#$10,(opponent).l
 		bcc.w	locret_10958
 		bsr.w	sub_104F2
-		cmpi.b	#4,(opponent).l
+		cmpi.b	#OPP_NASU_GRAVE,(opponent).l
 		beq.s	locret_10958
 		bsr.w	sub_104B0
 
@@ -27111,12 +27116,12 @@ sub_1095A:
 		cmpi.b	#$10,(opponent).l
 		bcc.w	loc_1097A
 		jsr	(sub_604E).l
-		cmpi.b	#4,(opponent).l
+		cmpi.b	#OPP_NASU_GRAVE,(opponent).l
 		bne.s	loc_1097A
 		bsr.w	sub_104B0
 
 loc_1097A:
-		cmpi.b	#$C,(opponent).l
+		cmpi.b	#OPP_ROBOTNIK,(opponent).l
 		beq.s	loc_10986
 		rts
 ; ---------------------------------------------------------------------------
@@ -27383,7 +27388,7 @@ sub_10BF8:
 		move.w	#$FF60,(vscroll_buffer+2).l
 
 loc_10C38:
-		cmpi.b	#$C,(opponent).l
+		cmpi.b	#OPP_ROBOTNIK,(opponent).l
 		beq.s	loc_10C56
 		cmpi.b	#$11,(level).l
 		bge.s	locret_10C76
@@ -27771,7 +27776,7 @@ loc_110C2:
 		jsr	(ActorBookmark).l
 		cmpi.b	#$10,(opponent).l
 		bne.s	loc_110E4
-		move.b	#0,(opponent).l
+		move.b	#OPP_SKELETON,(opponent).l
 		jmp	(ActorDeleteSelf).l
 ; ---------------------------------------------------------------------------
 
@@ -27831,7 +27836,7 @@ loc_1112A:
 		clr.w	aX(a0)
 		clr.w	aX+2(a0)
 		bsr.w	sub_111B0
-		cmpi.b	#$C,(opponent).l
+		cmpi.b	#OPP_ROBOTNIK,(opponent).l
 		beq.s	loc_11170
 		cmpi.b	#$10,(opponent).l
 		bne.s	loc_11176
@@ -28110,7 +28115,7 @@ loc_1130C:
 		move.b	#$80,6(a1)
 		move.b	#$20,8(a1)
 		move.b	d5,9(a1)
-		cmpi.b	#$C,(opponent).l
+		cmpi.b	#OPP_ROBOTNIK,(opponent).l
 		beq.s	loc_11344
 		cmpi.b	#$10,(opponent).l
 		bne.s	loc_11348
@@ -28143,7 +28148,7 @@ loc_1137E:
 		move.l	a0,$2E(a1)
 		move.b	#$20,8(a1)
 		move.b	#4,9(a1)
-		cmpi.b	#$C,(opponent).l
+		cmpi.b	#OPP_ROBOTNIK,(opponent).l
 		beq.s	loc_113A8
 		cmpi.b	#$10,(opponent).l
 		bne.s	loc_113AC
@@ -31607,7 +31612,7 @@ sub_12646:
 		lsl.b	#1,d0
 		or.b	$2A(a0),d0
 		eori.b	#1,d0
-		and.b	(byte_FF1958).l,d0
+		and.b	(control_player_1).l,d0
 		beq.w	loc_1266E
 		andi	#$FFFE,sr
 		rts

@@ -236,9 +236,9 @@ byte_FF18B4		rs.b	$A2
 
 use_plane_a_buffer	rs.w	1
 
-byte_FF1958		rs.b	1
-byte_FF1959		rs.b	1
-byte_FF195A		rs.b	1
+control_player_1	rs.b	1
+control_puyo_drop	rs.b	1
+skip_scenario_stages	rs.b	1
 byte_FF195B		rs.b	1
 dword_FF195C		rs.l	1
 dword_FF1960		rs.l	1
