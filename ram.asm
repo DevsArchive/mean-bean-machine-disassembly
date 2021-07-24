@@ -222,8 +222,8 @@ sound_queue_current	rs.b	1
 
 sound_queue		rs.b	$100
 
-byte_FF123E		rs.b	$100
-byte_FF133E		rs.b	$100
+p1_puyo_order		rs.b	$100
+p2_puyo_order		rs.b	$100
 byte_FF143E		rs.b	8
 byte_FF1446		rs.b	$A2
 byte_FF14E8		rs.b	$A2

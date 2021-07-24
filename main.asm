@@ -2826,7 +2826,7 @@ BC_Level:
 
 		BRUN	LoadLevelBGPal
 		BWRITE	pressed_time, $802
-		BRUN	sub_3A64
+		BRUN	GenPuyoOrder
 		BFRMEND
 		BRUN	loc_3C00
 		BFRMEND
@@ -3118,7 +3118,7 @@ BC_VersusModeLoop:
 		BPAL	Pal_3096, 3
 		BPUYO	$2000,	ArtPuyo_LevelSprites
 		BRUN	sub_93B4
-		BRUN	sub_3A64
+		BRUN	GenPuyoOrder
 		BRUN	loc_3C00
 		BNEM	$9000, ArtNem_DifficultyFaces
 		BNEM	$8800, ArtNem_DifficultyFaces2
@@ -3185,7 +3185,7 @@ stru_24D6:
 		BPAL	Pal_GreenTealPuyos, 2
 		BPAL	Pal_2856, 3
 		BRUN	sub_DDD8
-		BRUN	sub_3A64
+		BRUN	GenPuyoOrder
 		BRUN	loc_3C00
 		BFRMEND
 		BRUN	loc_6070
@@ -3295,7 +3295,7 @@ LevelIntroMusicIDs:
 		dc.b 0
 		dc.b 0
 ; ---------------------------------------------------------------------------
-; START	OF FUNCTION CHUNK FOR sub_3A00
+; START	OF FUNCTION CHUNK FOR HandleLevelMusic
 
 PlayLevelMusic:
 		clr.w	d1
@@ -3309,7 +3309,7 @@ PlayLevelMusic:
 .NewID:
 		move.b	d0,(cur_level_music).l
 		jmp	(JmpTo_PlaySound).l
-; END OF FUNCTION CHUNK	FOR sub_3A00
+; END OF FUNCTION CHUNK	FOR HandleLevelMusic
 ; ---------------------------------------------------------------------------
 LevelMusicIDs:
 		dc.b 0
@@ -3697,7 +3697,7 @@ off_3334:	dc.l byte_33B8
 		dc.l byte_351A
 		dc.l byte_3526
 		dc.l byte_3532
-		dc.l DefaultHighScores6
+		dc.l byte_3546
 		dc.l byte_3574
 		dc.l byte_3590
 		dc.l byte_35AC
@@ -3738,7 +3738,7 @@ byte_351A:	dc.b 0,	0, $10,	9, $10,	$C, $10, $B, $20, $40, $FE, 0
 byte_3526:	dc.b 0,	2, $C, $E, $A, $35, $C,	$F, $A,	$36, $FE, 0
 byte_3532:	dc.b 0,	2, 8, 9, 8, $1C, $C, $1D, 8, $1C, 8, 9,	8, $1E,	$C, $1F
 		dc.b 8,	$1E, $FE, 0
-DefaultHighScores6:	dc.b 0,	0, 8, 9, 8, $C,	8, $B, 2, $40, 2, $24, 2, $26, 2, $25
+byte_3546:	dc.b 0,	0, 8, 9, 8, $C,	8, $B, 2, $40, 2, $24, 2, $26, 2, $25
 		dc.b 2,	$D, 2, $24, 2, $26, 2, $25, 2, $D, 2, $24, 2, $26, 2, $25
 		dc.b 2,	$D, 2, $24, 2, $26, 2, $25, 8, $B, 8, $C, $FE, 0
 byte_3574:	dc.b 0,	0, 4, $D, 4, $24, 4, $26, 4, $25, 3, $D, 3, $24, 3, $26
@@ -4109,9 +4109,9 @@ loc_3834:
 		btst	#5,d0
 		bne.w	loc_385A
 		swap	d1
-		cmpi.w	#$80,d1
+		cmpi.w	#128,d1
 		bcs.w	loc_3860
-		cmpi.w	#$1C0,d1
+		cmpi.w	#320+128,d1
 		bcc.w	loc_3860
 		swap	d1
 
@@ -4123,7 +4123,7 @@ loc_385A:
 loc_3860:
 		movem.l	(sp)+,d0
 		move.b	#0,d0
-		ori	#1,sr
+		SET_CARRY
 		rts
 ; End of function sub_382A
 
@@ -4144,9 +4144,9 @@ loc_3878:
 		btst	#4,d0
 		bne.w	loc_389E
 		swap	d1
-		cmpi.w	#$80,d1
+		cmpi.w	#128,d1
 		bcs.w	loc_38A4
-		cmpi.w	#$160,d1
+		cmpi.w	#224+128,d1
 		bcc.w	loc_38A4
 		swap	d1
 
@@ -4158,7 +4158,7 @@ loc_389E:
 loc_38A4:
 		movem.l	(sp)+,d0
 		move.b	#$FF,d0
-		ori	#1,sr
+		SET_CARRY
 		rts
 ; End of function sub_386E
 
@@ -4322,10 +4322,7 @@ loc_39FA:
 ; =============== S U B	R O U T	I N E =======================================
 
 
-sub_3A00:
-
-; FUNCTION CHUNK AT 000026B6 SIZE 00000024 BYTES
-
+HandleLevelMusic:
 		tst.b	(level_mode).l
 		beq.w	.CheckPlayer
 		rts
@@ -4339,7 +4336,7 @@ sub_3A00:
 
 .CheckDanger:
 		cmpi.b	#4,(cur_level_music).l
-		beq.w	.CheckOutdanger
+		beq.w	.CheckDangerOver
 		cmpi.w	#60,(puyo_count_p1).l
 		bcc.w	.InDanger
 		rts
@@ -4351,7 +4348,7 @@ sub_3A00:
 		jmp	(JmpTo_PlaySound).l
 ; ---------------------------------------------------------------------------
 
-.CheckOutdanger:
+.CheckDangerOver:
 		cmpi.w	#54,(puyo_count_p1).l
 		bcs.w	JmpTo_PlayLevelMusic
 		rts
@@ -4359,110 +4356,117 @@ sub_3A00:
 
 JmpTo_PlayLevelMusic:
 		jmp	(PlayLevelMusic).l
-; End of function sub_3A00
+; End of function HandleLevelMusic
 
 ; ---------------------------------------------------------------------------
-unk_3A54:	dc.b   4
-		dc.b   4
-		dc.b   4
-		dc.b   5
-		dc.b   5
-		dc.b   5
-		dc.b   5
-		dc.b   5
-		dc.b   5
-		dc.b   5
-		dc.b   5
-		dc.b   5
-		dc.b   5
-		dc.b   5
-		dc.b   5
-		dc.b   5
+MaxPuyoColors:	dc.b PuyoColors_LessonCount-PuyoColors
+		dc.b PuyoColors_LessonCount-PuyoColors
+		dc.b PuyoColors_LessonCount-PuyoColors
+		dc.b PuyoColors_NormalCount-PuyoColors
+		dc.b PuyoColors_NormalCount-PuyoColors
+		dc.b PuyoColors_NormalCount-PuyoColors
+		dc.b PuyoColors_NormalCount-PuyoColors
+		dc.b PuyoColors_NormalCount-PuyoColors
+		dc.b PuyoColors_NormalCount-PuyoColors
+		dc.b PuyoColors_NormalCount-PuyoColors
+		dc.b PuyoColors_NormalCount-PuyoColors
+		dc.b PuyoColors_NormalCount-PuyoColors
+		dc.b PuyoColors_NormalCount-PuyoColors
+		dc.b PuyoColors_NormalCount-PuyoColors
+		dc.b PuyoColors_NormalCount-PuyoColors
+		dc.b PuyoColors_NormalCount-PuyoColors
 
 ; =============== S U B	R O U T	I N E =======================================
 
 
-sub_3A64:
-		move.b	#4,d2
+GenPuyoOrder:
+		move.b	#PuyoColors_LessonCount-PuyoColors,d2
 		cmpi.b	#1,(level_mode).l
 		beq.w	loc_3A80
 		clr.w	d1
 		move.b	(level).l,d1
-		move.b	unk_3A54(pc,d1.w),d2
+		move.b	MaxPuyoColors(pc,d1.w),d2
 
 loc_3A80:
-		move.w	#$FF,d1
+		move.w	#$100-1,d1
 		clr.w	d0
-		lea	(byte_FF123E).l,a1
-		lea	(byte_3B36).l,a2
+		lea	(p1_puyo_order).l,a1
+		lea	(PuyoColors).l,a2
 
-loc_3A92:
+.StoreP1Colors:
 		move.b	(a2,d0.w),(a1)+
 		addq.b	#1,d0
 		cmp.b	d2,d0
-		bcs.w	loc_3AA0
+		bcs.w	.NoP1ListReset
 		clr.b	d0
 
-loc_3AA0:
-		dbf	d1,loc_3A92
-		move.w	#$FF,d1
-		lea	(byte_FF123E).l,a1
+.NoP1ListReset:
+		dbf	d1,.StoreP1Colors
 
-loc_3AAE:
+		move.w	#$100-1,d1
+		lea	(p1_puyo_order).l,a1
+
+.ShuffleP1Colors:
 		jsr	(Random).l
 		andi.w	#$FF,d0
 		move.b	(a1,d0.w),d2
 		move.b	(a1,d1.w),(a1,d0.w)
 		move.b	d2,(a1,d1.w)
-		dbf	d1,loc_3AAE
-		move.w	#$FF,d1
-		lea	(byte_FF133E).l,a2
+		dbf	d1,.ShuffleP1Colors
 
-loc_3AD4:
+		move.w	#$100-1,d1
+		lea	(p2_puyo_order).l,a2
+
+.CopyP1ColorsToP2:
 		move.b	(a1)+,(a2)+
-		dbf	d1,loc_3AD4
+		dbf	d1,.CopyP1ColorsToP2
+
 		cmpi.b	#1,(level_mode).l
-		beq.w	loc_3AE8
+		beq.w	.DifferentP2Order
 		rts
 ; ---------------------------------------------------------------------------
 
-loc_3AE8:
-		move.w	#$F7,d1
+.DifferentP2Order:
+		move.w	#$F8-1,d1
 		clr.w	d0
-		lea	((byte_FF133E+8)).l,a1
-		lea	(byte_3B36).l,a2
+		lea	(p2_puyo_order+8).l,a1
+		lea	(PuyoColors).l,a2
 
-loc_3AFA:
+.StoreP2Colors:
 		move.b	(a2,d0.w),(a1)+
 		addq.b	#1,d0
-		cmpi.b	#5,d0
-		bcs.w	loc_3B0A
+		cmpi.b	#PuyoColors_NormalCount-PuyoColors,d0
+		bcs.w	.NoP2ListReset
 		clr.b	d0
 
-loc_3B0A:
-		dbf	d1,loc_3AFA
-		move.w	#$F7,d1
-		lea	((byte_FF133E+8)).l,a1
+.NoP2ListReset:
+		dbf	d1,.StoreP2Colors
 
-loc_3B18:
+		move.w	#$F8-1,d1
+		lea	(p2_puyo_order+8).l,a1
+
+.ShuffleP2Colors:
 		move.w	#$F8,d0
 		jsr	(RandomBound).l
 		move.b	(a1,d0.w),d2
 		move.b	(a1,d1.w),(a1,d0.w)
 		move.b	d2,(a1,d1.w)
-		dbf	d1,loc_3B18
+		dbf	d1,.ShuffleP2Colors
 		rts
-; End of function sub_3A64
+; End of function GenPuyoOrder
 
 ; ---------------------------------------------------------------------------
-byte_3B36:	dc.b 0
-		dc.b   1
-		dc.b   3
-		dc.b   4
-		dc.b   5
-		dc.b   6
-		dc.b   2
-		dc.b   0
+PuyoColors:
+		dc.b PUYO_RED
+		dc.b PUYO_YELLOW
+		dc.b PUYO_GREEN
+		dc.b PUYO_PURPLE
+PuyoColors_LessonCount:
+		dc.b PUYO_BLUE
+PuyoColors_NormalCount:
+		dc.b PUYO_GARBAGE	; Unused
+		dc.b PUYO_TEAL		; Unused
+		dc.b 0
 
 ; =============== S U B	R O U T	I N E =======================================
 
@@ -4703,7 +4707,7 @@ loc_3DDE:
 		jsr	(sub_12BAA).l
 		jsr	(sub_88A8).l
 		bsr.w	sub_9332
-		bsr.w	sub_3A00
+		bsr.w	HandleLevelMusic
 		bsr.w	ActorBookmark
 		move.b	#0,(byte_FF1D0E).l
 		jsr	(sub_12C8A).l
@@ -5289,10 +5293,10 @@ loc_448A:
 		movem.l	d2/a2,-(sp)
 		clr.w	d2
 		move.b	$20(a1),d2
-		lea	(byte_FF123E).l,a2
+		lea	(p1_puyo_order).l,a2
 		tst.b	$2A(a0)
 		beq.w	loc_44A8
-		lea	(byte_FF133E).l,a2
+		lea	(p2_puyo_order).l,a2
 
 loc_44A8:
 		move.b	(a2,d2.w),d0
@@ -5306,10 +5310,10 @@ loc_44BA:
 		movem.l	d2/a2,-(sp)
 		clr.w	d2
 		move.b	$20(a1),d2
-		lea	(byte_FF123E).l,a2
+		lea	(p1_puyo_order).l,a2
 		tst.b	$2B(a0)
 		beq.w	loc_44D8
-		lea	(byte_FF133E).l,a2
+		lea	(p2_puyo_order).l,a2
 
 loc_44D8:
 		move.b	(a2,d2.w),d0
@@ -23908,9 +23912,9 @@ loc_F0F4:
 		move.b	(a1,d0.w),(opponent).l
 		jmp	(ActorDeleteSelf).l
 ; ---------------------------------------------------------------------------
-byte_F12A:	dc.b OPP_SKELETON
-		dc.b OPP_NASU_GRAVE
-		dc.b OPP_MUMMY
+byte_F12A:	dc.b OPP_SKELETON	; Puyo Puyo leftover
+		dc.b OPP_NASU_GRAVE	; Puyo Puyo leftover
+		dc.b OPP_MUMMY		; Puyo Puyo leftover
 		dc.b OPP_ARMS
 		dc.b OPP_FRANKLY
 		dc.b OPP_HUMPTY
@@ -27008,9 +27012,9 @@ sub_10800:
 
 ; ---------------------------------------------------------------------------
 unk_10822:	dc.b $10
-		dc.b OPP_SKELETON
-		dc.b OPP_NASU_GRAVE
-		dc.b OPP_MUMMY
+		dc.b OPP_SKELETON	; Puyo Puyo leftover
+		dc.b OPP_NASU_GRAVE	; Puyo Puyo leftover
+		dc.b OPP_MUMMY		; Puyo Puyo leftover
 		dc.b OPP_ARMS
 		dc.b OPP_FRANKLY
 		dc.b OPP_HUMPTY
@@ -32997,7 +33001,7 @@ loc_130CA:
 		move.b	$2A(a0),d0
 		lsl.w	#8,d0
 		move.b	$20(a1),d0
-		lea	(byte_FF123E).l,a4
+		lea	(p1_puyo_order).l,a4
 
 loc_130FA:
 		move.b	(a3)+,d1
@@ -33330,7 +33334,7 @@ byte_1332C:	dc.b 0
 ; ---------------------------------------------------------------------------
 
 loc_13330:
-		lea	(byte_FF123E).l,a1
+		lea	(p1_puyo_order).l,a1
 		lea	(unk_13342).l,a2
 
 loc_1333C:

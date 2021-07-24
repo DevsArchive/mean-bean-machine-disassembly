@@ -139,11 +139,11 @@ SND_PAUSE		rs.b	1
 ; --------------------------------------------------------------
 
 	rsreset
-OPP_SKELETON		rs.b	1
+OPP_SKELETON		rs.b	1	; Puyo Puyo leftover
 OPP_FRANKLY		rs.b	1
 OPP_DYNAMIGHT		rs.b	1
 OPP_ARMS		rs.b	1
-OPP_NASU_GRAVE		rs.b	1
+OPP_NASU_GRAVE		rs.b	1	; Puyo Puyo leftover
 OPP_GROUNDER		rs.b	1
 OPP_DAVY		rs.b	1
 OPP_COCONUTS		rs.b	1
@@ -152,8 +152,21 @@ OPP_SIR_FFUZZY		rs.b	1
 OPP_DRAGON		rs.b	1
 OPP_SCRATCH		rs.b	1
 OPP_ROBOTNIK		rs.b	1
-OPP_MUMMY		rs.b	1
+OPP_MUMMY		rs.b	1	; Puyo Puyo leftover
 OPP_HUMPTY		rs.b	1
 OPP_SKWEEL		rs.b	1
+
+; --------------------------------------------------------------
+; Puyo color IDs
+; --------------------------------------------------------------
+
+	rsreset
+PUYO_RED		rs.b	1
+PUYO_YELLOW		rs.b	1
+PUYO_TEAL		rs.b	1	; Unused
+PUYO_GREEN		rs.b	1
+PUYO_PURPLE		rs.b	1
+PUYO_BLUE		rs.b	1
+PUYO_GARBAGE		rs.b	1
 
 ; --------------------------------------------------------------
