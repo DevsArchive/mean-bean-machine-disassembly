@@ -2569,9 +2569,9 @@ BC_GameIntro:
 		BFRMEND
 		BRUN	sub_EFFE
 		BFADE	Pal_RobotnikLair, 0, 0
-		BFADE	Pal_Grounder, 1, 0
-		BFADE	Pal_Scratch, 2, 0
-		BFADE	Pal_Robotnik, 3, 0
+		BFADE	Pal_GameIntroGrounder, 1, 0
+		BFADE	Pal_GameIntroScratch, 2, 0
+		BFADE	Pal_GameIntroRobotnik, 3, 0
 		BDISABLE
 		BFADE	Pal_Black, 0, 0
 		BFADE	Pal_Black, 1, 0
@@ -2784,9 +2784,9 @@ BC_LevelIntro:
 		BRUN	loc_F8FC
 		BFRMEND
 		BFADEI	Pal_LevelIntroFG, Pal_RobotnikLair, 0, 0
-		BFADEI	Pal_LevelIntroBG, Pal_Grounder, 1, 0
-		BFADEI	Pal_GreenTealPuyos, Pal_Scratch, 2, 0
-		BFADEI	Pal_Black, Pal_Robotnik, 3, 0
+		BFADEI	Pal_LevelIntroBG, Pal_GameIntroGrounder, 1, 0
+		BFADEI	Pal_GreenTealPuyos, Pal_GameIntroScratch, 2, 0
+		BFADEI	Pal_Black, Pal_GameIntroRobotnik, 3, 0
 		BWRITE	word_FF1122, 0
 		BDISABLE
 		BRUN	CheckFinalLevel
@@ -2870,7 +2870,7 @@ BC_GameOver:
 		BFRMEND
 		BFADE	Pal_GameOverFG, 0, 0
 		BFADE	Pal_GameOverBG, 1, 0
-		BFADE	Pal_Robotnik, 2, 0
+		BFADE	Pal_GameIntroRobotnik, 2, 0
 		BFADE	Pal_GameOverText, 3, 0
 		BRUN	sub_DA90
 		BDISABLE
@@ -2905,9 +2905,9 @@ BC_Ending:
 		BRUN	sub_C972
 		BRUN	loc_1047A
 		BFADE	Pal_RobotnikLair, 0, 0, 0
-		BFADE	Pal_Grounder, 1, 0, 0
+		BFADE	Pal_GameIntroGrounder, 1, 0, 0
 		BFADE	Pal_EndingBeans, 2, 0, 0
-		BFADE	Pal_Robotnik, 3, 0, 0
+		BFADE	Pal_GameIntroRobotnik, 3, 0, 0
 		BDISABLE
 		BJCLR	stru_2068
 		BFADE	Pal_Black, 0, 0
@@ -3465,11 +3465,11 @@ Palettes:
 Pal_Black:
 	dcb.w	$10, $000
 Pal_RedYellowPuyos:
-	incbin	"data/palettes/palette27F6.bin"
+	incbin	"data/palettes/puyo_red_yellow.bin"
 Pal_BluePurplePuyos:
-	incbin	"data/palettes/palette2816.bin"
+	incbin	"data/palettes/puyo_blue_purple.bin"
 Pal_GreenTealPuyos:
-	incbin	"data/palettes/palette2836.bin"
+	incbin	"data/palettes/puyo_green_teal.bin"
 Pal_2856:
 	incbin	"data/palettes/palette2856.bin"
 Pal_2876:
@@ -3483,13 +3483,13 @@ Pal_28D6:
 Pal_28F6:
 	incbin	"data/palettes/palette28F6.bin"
 Pal_GameOverFG:
-	incbin	"data/palettes/palette2916.bin"
+	incbin	"data/palettes/game_over_fg.bin"
 Pal_GameOverBG:
-	incbin	"data/palettes/palette2936.bin"
+	incbin	"data/palettes/game_over_bg.bin"
 Pal_White:
 	dcb.w	$10, $EEE
-Pal_2976:
-	incbin	"data/palettes/palette2976.bin"
+Pal_White2:
+	dcb.w	$10, $EEE
 Pal_2996:
 	incbin	"data/palettes/palette2996.bin"
 Pal_29B6:
@@ -3499,7 +3499,7 @@ Pal_29D6:
 Pal_29F6:
 	incbin	"data/palettes/palette29F6.bin"
 Pal_HighScoresBG:
-	incbin	"data/palettes/palette2A16.bin"
+	incbin	"data/palettes/high_scores_bg.bin"
 Pal_2A36:
 	incbin	"data/palettes/palette2A36.bin"
 Pal_2A56:
@@ -3517,13 +3517,13 @@ Pal_2AF6:
 Pal_2B16:
 	incbin	"data/palettes/palette2B16.bin"
 Pal_OptTextBlue:
-	incbin	"data/palettes/palette2B36.bin"
+	incbin	"data/palettes/options_text_blue.bin"
 Pal_OptTextRed:
-	incbin	"data/palettes/palette2B56.bin"
+	incbin	"data/palettes/options_text_red.bin"
 Pal_OptTextGreen:
-	incbin	"data/palettes/palette2B76.bin"
+	incbin	"data/palettes/options_text_green.bin"
 Pal_TutorialJoystick:
-	incbin	"data/palettes/palette2B96.bin"
+	incbin	"data/palettes/tutorial_joystick.bin"
 Pal_2BB6:
 	incbin	"data/palettes/palette2BB6.bin"
 Pal_2BD6:
@@ -3546,100 +3546,100 @@ Pal_2CD6:
 	incbin	"data/palettes/palette2CD6.bin"
 Pal_2CF6:
 	incbin	"data/palettes/palette2CF6.bin"
-Pal_2D16:
-	incbin	"data/palettes/palette2D16.bin"
-Pal_2D36:
-	incbin	"data/palettes/palette2D36.bin"
-Pal_2D56:
-	incbin	"data/palettes/palette2D56.bin"
-Pal_2D76:
-	incbin	"data/palettes/palette2D76.bin"
-Pal_2D96:
-	incbin	"data/palettes/palette2D96.bin"
-Pal_2DB6:
-	incbin	"data/palettes/palette2DB6.bin"
-Pal_2DD6:
-	incbin	"data/palettes/palette2DD6.bin"
-Pal_2DF6:
-	incbin	"data/palettes/palette2DF6.bin"
-Pal_LevelIntroFG:
-	incbin	"data/palettes/palette2E16.bin"
-Pal_LevelIntroBG:
-	incbin	"data/palettes/palette2E36.bin"
-Pal_RobotnikLair:
-	incbin	"data/palettes/palette2E56.bin"
-Pal_Grounder:
-	incbin	"data/palettes/palette2E76.bin"
-Pal_Robotnik:
-	incbin	"data/palettes/palette2E96.bin"
 Pal_Scratch:
-	incbin	"data/palettes/palette2EB6.bin"
+	incbin	"data/palettes/scratch.bin"
+Pal_Frankly:
+	incbin	"data/palettes/frankly.bin"
+Pal_Coconuts:
+	incbin	"data/palettes/coconuts.bin"
+Pal_Dynamight:
+	incbin	"data/palettes/dynamight.bin"
+Pal_Grounder:
+	incbin	"data/palettes/grounder.bin"
+Pal_DavySprocket:
+	incbin	"data/palettes/davy_sprocket.bin"
+Pal_Spike:
+	incbin	"data/palettes/spike.bin"
+Pal_CoconutsIntro:
+	incbin	"data/palettes/coconuts_intro.bin"
+Pal_LevelIntroFG:
+	incbin	"data/palettes/level_intro_fg.bin"
+Pal_LevelIntroBG:
+	incbin	"data/palettes/level_intro_bg.bin"
+Pal_RobotnikLair:
+	incbin	"data/palettes/robotnik_lair.bin"
+Pal_GameIntroGrounder:
+	incbin	"data/palettes/game_intro_grounder.bin"
+Pal_GameIntroRobotnik:
+	incbin	"data/palettes/game_intro_robotnik.bin"
+Pal_GameIntroScratch:
+	incbin	"data/palettes/game_intro_scratch.bin"
 Pal_MainMenu:
-	incbin	"data/palettes/palette2ED6.bin"
+	incbin	"data/palettes/main_menu.bin"
 Pal_MainMenuSel:
-	incbin	"data/palettes/palette2EF6.bin"
+	incbin	"data/palettes/main_menu_select.bin"
 Pal_GameOverText:
-	incbin	"data/palettes/palette2F16.bin"
+	incbin	"data/palettes/game_over_text.bin"
 Pal_MainMenuShadow:
-	incbin	"data/palettes/palette2F36.bin"
-Pal_2F56:
-	incbin	"data/palettes/palette2F56.bin"
-Pal_2F76:
-	incbin	"data/palettes/palette2F76.bin"
-Pal_2F96:
-	incbin	"data/palettes/palette2F96.bin"
-Pal_2FB6:
-	incbin	"data/palettes/palette2FB6.bin"
-Pal_2FD6:
-	incbin	"data/palettes/palette2FD6.bin"
-Pal_2FF6:
-	incbin	"data/palettes/palette2FF6.bin"
-Pal_3016:
-	incbin	"data/palettes/palette3016.bin"
-Pal_3036:
-	incbin	"data/palettes/palette3036.bin"
-Pal_3056:
-	incbin	"data/palettes/palette3056.bin"
-Pal_3076:
-	incbin	"data/palettes/palette3076.bin"
+	incbin	"data/palettes/main_menu_shadow.bin"
+Pal_DragonBreath:
+	incbin	"data/palettes/dragon_breath.bin"
+Pal_FranklyIntro:
+	incbin	"data/palettes/frankly_intro.bin"
+Pal_Humpty:
+	incbin	"data/palettes/humpty.bin"
+Pal_Robotnik:
+	incbin	"data/palettes/robotnik.bin"
+Pal_Skweel:
+	incbin	"data/palettes/skweel.bin"
+Pal_DavySprocketIntro:
+	incbin	"data/palettes/davy_sprocket_intro.bin"
+Pal_DynamightIntro:
+	incbin	"data/palettes/dynamight_intro.bin"
+Pal_SirFfuzzyLogik:
+	incbin	"data/palettes/sir_ffuzzy_logik.bin"
+Pal_Arms:
+	incbin	"data/palettes/arms.bin"
+Pal_ArmsIntro:
+	incbin	"data/palettes/arms_intro.bin"
 Pal_3096:
 	incbin	"data/palettes/palette3096.bin"
-Pal_30B6:
-	incbin	"data/palettes/palette30B6.bin"
-Pal_30D6:
-	incbin	"data/palettes/palette30D6.bin"
-Pal_30F6:
-	incbin	"data/palettes/palette30F6.bin"
-Pal_3116:
-	incbin	"data/palettes/palette3116.bin"
-Pal_3136:
-	incbin	"data/palettes/palette3136.bin"
+Pal_SpikeIntro:
+	incbin	"data/palettes/spike_intro.bin"
+Pal_DragonBreathIntro:
+	incbin	"data/palettes/dragon_breath_intro.bin"
+Pal_SirFfuzzyLogikIntro:
+	incbin	"data/palettes/sir_ffuzzy_logik_intro.bin"
+Pal_HumptyIntro:
+	incbin	"data/palettes/humpty_intro.bin"
+Pal_GrounderIntro:
+	incbin	"data/palettes/grounder_intro.bin"
 Pal_3156:
 	incbin	"data/palettes/palette3156.bin"
-Pal_3176:
-	incbin	"data/palettes/palette3176.bin"
-Pal_3196:
-	incbin	"data/palettes/palette3196.bin"
+Pal_SkweelIntro:
+	incbin	"data/palettes/skweel_intro.bin"
+Pal_ScratchIntro:
+	incbin	"data/palettes/scratch_intro.bin"
 Pal_Title1:
-	incbin	"data/palettes/palette31B6.bin"
+	incbin	"data/palettes/title1.bin"
 Pal_Title2:
-	incbin	"data/palettes/palette31D6.bin"
+	incbin	"data/palettes/title2.bin"
 Pal_Title3:
-	incbin	"data/palettes/palette31F6.bin"
+	incbin	"data/palettes/title3.bin"
 Pal_3216:
 	incbin	"data/palettes/palette3216.bin"
 Pal_Password4:
-	incbin	"data/palettes/palette3236.bin"
+	incbin	"data/palettes/password4.bin"
 Pal_Password3:
-	incbin	"data/palettes/palette3256.bin"
+	incbin	"data/palettes/password3.bin"
 Pal_EndingBeans:
 	incbin	"data/palettes/palette3276.bin"
 Pal_SegaLogo:
-	incbin	"data/palettes/palette3296.bin"
+	incbin	"data/palettes/sega_logo.bin"
 Pal_32B6:
 	incbin	"data/palettes/palette32B6.bin"
 Pal_Title4:
-	incbin	"data/palettes/palette32D6.bin"
+	incbin	"data/palettes/title4.bin"
 Pal_32F6:
 	incbin	"data/palettes/palette32F6.bin"
 byte_3316:	dc.b 6
@@ -7805,27 +7805,19 @@ GetPuyoFieldTopLeft:
 		eor.b	d0,d1
 		lsl.b	#2,d1
 		move.w	word_5B34(pc,d1.w),d0
-		move.w	word_5B36(pc,d1.w),d1
+		move.w	word_5B34+2(pc,d1.w),d1
 		rts
 ; End of function GetPuyoFieldTopLeft
 
 ; ---------------------------------------------------------------------------
-word_5B34:	dc.w $90
-word_5B36:	dc.w $90
-		dc.w $150
-		dc.w $90
-		dc.w $90
-		dc.w $90
-		dc.w $150
-		dc.w $90
-		dc.w $90
-		dc.w $90
-		dc.w $150
-		dc.w $90
-		dc.w $90
-		dc.w $90
-		dc.w $150
-		dc.w $90
+word_5B34:	dc.w 16+128,  16+128
+		dc.w 208+128, 16+128
+		dc.w 16+128,  16+128
+		dc.w 208+128, 16+128
+		dc.w 16+128,  16+128
+		dc.w 208+128, 16+128
+		dc.w 16+128,  16+128
+		dc.w 208+128, 16+128
 
 ; =============== S U B	R O U T	I N E =======================================
 
@@ -7849,24 +7841,20 @@ loc_5B6A:
 		andi.b	#3,d0
 		lsl.b	#3,d0
 		move.w	word_5BAE(pc,d0.w),$A(a1)
-		move.w	word_5BB0(pc,d0.w),$E(a1)
-		move.w	word_5BB0(pc,d0.w),$20(a1)
-		move.l	off_5BB2(pc,d0.w),$32(a1)
+		move.w	word_5BAE+2(pc,d0.w),$E(a1)
+		move.w	word_5BAE+2(pc,d0.w),$20(a1)
+		move.l	word_5BAE+4(pc,d0.w),$32(a1)
 		rts
 ; End of function sub_5B54
 
 ; ---------------------------------------------------------------------------
-word_5BAE:	dc.w $140
-word_5BB0:	dc.w $128
-off_5BB2:	dc.l byte_3316
-		dc.w $120
-		dc.w $108
+word_5BAE:	dc.w $140, $128
 		dc.l byte_3316
-		dc.w $120
-		dc.w $10C
+		dc.w $120, $108
+		dc.l byte_3316
+		dc.w $120, $10C
 		dc.l byte_3330
-		dc.w $120
-		dc.w $108
+		dc.w $120, $108
 		dc.l byte_3330
 ; ---------------------------------------------------------------------------
 
@@ -8321,7 +8309,7 @@ loc_6084:
 		clr.w	d1
 		move.b	(opponent).l,d1
 		lsl.w	#2,d1
-		lea	(off_6216).l,a0
+		lea	(OpponentArt).l,a0
 		movea.l	(a0,d1.w),a0
 		DISABLE_INTS
 		jsr	(NemDec).l
@@ -8363,7 +8351,7 @@ loc_610C:
 		cmp.w	$26(a0),d0
 		beq.w	loc_6144
 		move.w	d0,$26(a0)
-		lea	(off_6256).l,a1
+		lea	(OpponentMappings).l,a1
 		clr.w	d1
 		move.b	(opponent).l,d1
 		lsl.w	#2,d1
@@ -8385,7 +8373,7 @@ loc_6150:
 		movea.l	$32(a0),a2
 		move.w	(a2)+,d0
 		bge.s	loc_617E
-		lea	(off_6256).l,a2
+		lea	(OpponentMappings).l,a2
 		clr.w	d0
 		move.b	(opponent).l,d0
 		lsl.w	#2,d0
@@ -8425,7 +8413,7 @@ loc_617E:
 sub_61C0:
 		clr.l	d0
 		move.b	(opponent).l,d0
-		move.b	byte_6206(pc,d0.w),d0
+		move.b	OpponentPalettes(pc,d0.w),d0
 		lsl.w	#5,d0
 		lea	(Palettes).l,a2
 		adda.l	d0,a2
@@ -8440,7 +8428,7 @@ sub_61C0:
 sub_61E0:
 		clr.l	d0
 		move.b	(opponent).l,d0
-		move.b	byte_6206(pc,d0.w),d0
+		move.b	OpponentPalettes(pc,d0.w),d0
 		lsl.w	#5,d0
 		lea	(Palettes).l,a2
 		adda.l	d0,a2
@@ -8451,39 +8439,42 @@ sub_61E0:
 ; End of function sub_61E0
 
 ; ---------------------------------------------------------------------------
-byte_6206:	dc.b $2A
-		dc.b $2B
-		dc.b $2D
-		dc.b $44
-		dc.b $2A
-		dc.b $2E
-		dc.b $2F
-		dc.b $2C
-		dc.b $30
-		dc.b $43
-		dc.b $3C
-		dc.b $2A
-		dc.b $3F
-		dc.b $2A
-		dc.b $3E
-		dc.b $40
-off_6216:	dc.l byte_3BA82
-		dc.l byte_3CD38
-		dc.l byte_3F3E0
-		dc.l byte_4B370
-		dc.l byte_3BA82
-		dc.l byte_4065E
-		dc.l byte_41D84
-		dc.l byte_3E08A
-		dc.l byte_42D60
-		dc.l byte_49D74
-		dc.l byte_4457E
-		dc.l byte_3BA82
-		dc.l byte_470F0
-		dc.l byte_3BA82
-		dc.l byte_45E2A
-		dc.l byte_487E2
-off_6256:	dc.l off_6296
+OpponentPalettes:
+		dc.b (Pal_Scratch-Palettes)>>5
+		dc.b (Pal_Frankly-Palettes)>>5
+		dc.b (Pal_Dynamight-Palettes)>>5
+		dc.b (Pal_Arms-Palettes)>>5
+		dc.b (Pal_Scratch-Palettes)>>5
+		dc.b (Pal_Grounder-Palettes)>>5
+		dc.b (Pal_DavySprocket-Palettes)>>5
+		dc.b (Pal_Coconuts-Palettes)>>5
+		dc.b (Pal_Spike-Palettes)>>5
+		dc.b (Pal_SirFfuzzyLogik-Palettes)>>5
+		dc.b (Pal_DragonBreath-Palettes)>>5
+		dc.b (Pal_Scratch-Palettes)>>5
+		dc.b (Pal_Robotnik-Palettes)>>5
+		dc.b (Pal_Scratch-Palettes)>>5
+		dc.b (Pal_Humpty-Palettes)>>5
+		dc.b (Pal_Skweel-Palettes)>>5
+OpponentArt:
+		dc.l ArtNem_Scratch
+		dc.l ArtNem_Frankly
+		dc.l ArtNem_Dynamight
+		dc.l ArtNem_Arms
+		dc.l ArtNem_Scratch
+		dc.l ArtNem_Grounder
+		dc.l ArtNem_DavySprocket
+		dc.l ArtNem_Coconuts
+		dc.l ArtNem_Spike
+		dc.l ArtNem_SirFfuzzyLogik
+		dc.l ArtNem_DragonBreath
+		dc.l ArtNem_Scratch
+		dc.l ArtNem_Robotnik
+		dc.l ArtNem_Scratch
+		dc.l ArtNem_Humpty
+		dc.l ArtNem_Skweel
+OpponentMappings:
+		dc.l off_6296
 		dc.l off_62D8
 		dc.l off_636E
 		dc.l off_6734
@@ -16087,7 +16078,7 @@ LoadOpponentIntro:
 		clr.l	d0
 		move.b	(opponent).l,d0
 		lsl.w	#2,d0
-		lea	(OpponentArt).l,a1
+		lea	(OpponentIntroArt).l,a1
 		movea.l	(a1,d0.w),a0
 		move.w	#$8000,d0
 
@@ -16163,7 +16154,8 @@ word_A9E4:	dc.w $40
 		dc.w $20
 		dc.w $D0
 		dc.w $20
-OpponentArt:	dc.l ArtNem_CoconutsIntro
+OpponentIntroArt:
+		dc.l ArtNem_CoconutsIntro
 		dc.l ArtNem_FranklyIntro
 		dc.l ArtNem_DynamightIntro
 		dc.l ArtNem_ArmsIntro
@@ -17075,7 +17067,7 @@ loc_B102:
 		jsr	(FadeToPalette).l
 		clr.l	d0
 		move.b	(opponent).l,d0
-		move.b	unk_B140(pc,d0.w),d0
+		move.b	OpponentIntroPals(pc,d0.w),d0
 		lsl.w	#5,d0
 		lea	(Palettes).l,a2
 		adda.l	d0,a2
@@ -17083,24 +17075,25 @@ loc_B102:
 		move.b	#0,d1
 		jmp	(FadeToPalette).l
 ; ---------------------------------------------------------------------------
-unk_B140:	dc.b $31
-		dc.b $3D
-		dc.b $42
-		dc.b $45
-		dc.b $31
-		dc.b $4B
-		dc.b $41
-		dc.b $31
-		dc.b $47
-		dc.b $49
-		dc.b $48
-		dc.b $4E
-		dc.b $31
-		dc.b $31
-		dc.b $4A
-		dc.b $4D
-		dc.b $31
-		dc.b   0
+OpponentIntroPals:
+		dc.b (Pal_CoconutsIntro-Palettes)>>5
+		dc.b (Pal_FranklyIntro-Palettes)>>5
+		dc.b (Pal_DynamightIntro-Palettes)>>5
+		dc.b (Pal_ArmsIntro-Palettes)>>5
+		dc.b (Pal_CoconutsIntro-Palettes)>>5
+		dc.b (Pal_GrounderIntro-Palettes)>>5
+		dc.b (Pal_DavySprocketIntro-Palettes)>>5
+		dc.b (Pal_CoconutsIntro-Palettes)>>5
+		dc.b (Pal_SpikeIntro-Palettes)>>5
+		dc.b (Pal_SirFfuzzyLogikIntro-Palettes)>>5
+		dc.b (Pal_DragonBreathIntro-Palettes)>>5
+		dc.b (Pal_ScratchIntro-Palettes)>>5
+		dc.b (Pal_CoconutsIntro-Palettes)>>5
+		dc.b (Pal_CoconutsIntro-Palettes)>>5
+		dc.b (Pal_HumptyIntro-Palettes)>>5
+		dc.b (Pal_SkweelIntro-Palettes)>>5
+		dc.b (Pal_CoconutsIntro-Palettes)>>5
+		dc.b (Pal_Black-Palettes)>>5
 ; ---------------------------------------------------------------------------
 
 loc_B152:
@@ -17115,10 +17108,10 @@ loc_B152:
 		bsr.w	FindActorSlot
 		bcs.w	locret_B1AA
 		move.l	a1,(dword_FF112C).l
-		move.l	#$FFFF0000,$E(a1)
-		move.l	#$FFFF4000,$16(a1)
-		move.l	#$FFFF8000,$1E(a1)
-		move.l	#$FFFFC000,$26(a1)
+		move.l	#-$10000,$E(a1)
+		move.l	#-$C000,$16(a1)
+		move.l	#-$8000,$1E(a1)
+		move.l	#-$4000,$26(a1)
 
 locret_B1AA:
 		rts
@@ -19607,38 +19600,9 @@ loc_C90E:
 		jsr	(ActorBookmark).l
 		rts
 ; ---------------------------------------------------------------------------
-unk_C948:	dc.b   2
-		dc.b   0
-		dc.b   2
-		dc.b   0
-		dc.b   2
-		dc.b   0
-		dc.b   2
-		dc.b   0
-		dc.b   2
-		dc.b   0
-		dc.b   2
-		dc.b   0
-		dc.b   2
-		dc.b   0
-		dc.b   2
-		dc.b   0
-		dc.b   2
-		dc.b   0
-		dc.b   2
-		dc.b   0
-		dc.b   2
-		dc.b   0
-		dc.b   2
-		dc.b   0
-		dc.b   2
-		dc.b   0
-		dc.b   2
-		dc.b   0
-		dc.b   2
-		dc.b   0
-		dc.b   2
-		dc.b   0
+unk_C948:
+		dc.w $0200, $0200, $0200, $0200, $0200, $0200, $0200, $0200
+		dc.w $0200, $0200, $0200, $0200, $0200, $0200, $0200, $0200
 
 ; =============== S U B	R O U T	I N E =======================================
 
@@ -21177,22 +21141,22 @@ sub_D818:
 loc_D85A:
 		jmp	(ActorDeleteSelf).l
 ; ---------------------------------------------------------------------------
-word_D860:	dc.w $FFFF
-		dc.w $FFFF
-		dc.w $FFFF
-		dc.w $23E
-		dc.w $FFFF
-		dc.w $FFFF
-		dc.w $FFFF
-		dc.w $FFFF
-		dc.w $FFFF
-		dc.w $FFFF
-		dc.w $FFFF
-		dc.w $FFFF
-		dc.w $FFFF
-		dc.w $FFFF
-		dc.w $30
-		dc.w $330
+word_D860:	dc.b -1, -1
+		dc.b -1, -1
+		dc.b -1, -1
+		dc.b 2, (Pal_Humpty-Palettes)>>5
+		dc.b -1, -1
+		dc.b -1, -1
+		dc.b -1, -1
+		dc.b -1, -1
+		dc.b -1, -1
+		dc.b -1, -1
+		dc.b -1, -1
+		dc.b -1, -1
+		dc.b -1, -1
+		dc.b -1, -1
+		dc.b 0, (Pal_Spike-Palettes)>>5
+		dc.b 3, (Pal_Spike-Palettes)>>5
 ; ---------------------------------------------------------------------------
 
 loc_D880:
@@ -21229,7 +21193,7 @@ loc_D8C8:
 		movea.l	(sp)+,a0
 		clr.l	d1
 		move.w	d6,d2
-		lea	(byte_6206).l,a1
+		lea	(OpponentPalettes).l,a1
 		move.b	(a1,d2.w),d1
 		lsl.w	#5,d1
 		lea	(Palettes).l,a2
@@ -21265,17 +21229,17 @@ dword_D916:	dc.l 0
 		dc.l 0
 		dc.w 0
 		dc.w 0
-		dc.l byte_3CD38
+		dc.l ArtNem_Frankly
 		dc.l byte_3DFCC
 		dc.l byte_3E02C
 		dc.w $2000
 		dc.w $A100
-		dc.l byte_3F3E0
+		dc.l ArtNem_Dynamight
 		dc.l byte_4055A
 		dc.l byte_40636
 		dc.w $4000
 		dc.w $C200
-		dc.l byte_4B370
+		dc.l ArtNem_Arms
 		dc.l byte_4C40E
 		dc.l byte_4C3E0
 		dc.w 0
@@ -21285,42 +21249,42 @@ dword_D916:	dc.l 0
 		dc.l 0
 		dc.w 0
 		dc.w 0
-		dc.l byte_4065E
+		dc.l ArtNem_Grounder
 		dc.l byte_41C9A
 		dc.l byte_41D72
 		dc.w $6000
 		dc.w $E300
-		dc.l byte_41D84
+		dc.l ArtNem_DavySprocket
 		dc.l byte_42C96
 		dc.l byte_42D4A
 		dc.w 0
 		dc.w $8000
-		dc.l byte_3E08A
+		dc.l ArtNem_Coconuts
 		dc.l byte_3F30C
 		dc.l byte_3F3CE
 		dc.w $6000
 		dc.w $E300
-		dc.l byte_42D60
+		dc.l ArtNem_Spike
 		dc.l byte_444A6
 		dc.l byte_4456E
 		dc.w 0
 		dc.w $8000
-		dc.l byte_49D74
+		dc.l ArtNem_SirFfuzzyLogik
 		dc.l byte_4B20A
 		dc.l byte_4B350
 		dc.w $2000
 		dc.w $A100
-		dc.l byte_4457E
+		dc.l ArtNem_DragonBreath
 		dc.l byte_45D24
 		dc.l byte_45E06
 		dc.w $4000
 		dc.w $C200
-		dc.l byte_3BA82
+		dc.l ArtNem_Scratch
 		dc.l byte_3CC98
 		dc.l byte_3CD1E
 		dc.w $6000
 		dc.w $E300
-		dc.l byte_470F0
+		dc.l ArtNem_Robotnik
 		dc.l byte_48712
 		dc.l byte_487CE
 		dc.w 0
@@ -21330,12 +21294,12 @@ dword_D916:	dc.l 0
 		dc.l 0
 		dc.w 0
 		dc.w 0
-		dc.l byte_45E2A
+		dc.l ArtNem_Humpty
 		dc.l byte_46FAA
 		dc.l byte_470CC
 		dc.w $4000
 		dc.w $C200
-		dc.l byte_487E2
+		dc.l ArtNem_Skweel
 		dc.l byte_49C22
 		dc.l byte_49D60
 		dc.w $2000
@@ -22141,7 +22105,7 @@ ActTitleHandler:
 		lea	(Palettes).l,a2
 		move.l	d3,d0
 		move.l	d0,d2
-		addi.w	#$4F,d2
+		addi.w	#(Pal_Title1-Palettes)>>5,d2
 		lsl.w	#5,d2
 		adda.l	d2,a2
 		moveq	#0,d1
@@ -26694,7 +26658,7 @@ loc_10520:
 		cmpi.b	#OPP_ROBOTNIK,d0
 		beq.s	loc_1054C
 		lsl.w	#2,d0
-		lea	(OpponentArt).l,a1
+		lea	(OpponentIntroArt).l,a1
 		movea.l	(a1,d0.w),a0
 		move.w	#$8000,d0
 		DISABLE_INTS
@@ -26753,7 +26717,7 @@ loc_1058C:
 loc_105F6:
 		clr.l	d0
 		move.b	(opponent).l,d0
-		move.b	byte_10616(pc,d0.w),d0
+		move.b	OpponentIntroPals2(pc,d0.w),d0
 		lsl.w	#5,d0
 		lea	(Palettes).l,a2
 		adda.l	d0,a2
@@ -26762,24 +26726,25 @@ loc_105F6:
 ; End of function sub_104F2
 
 ; ---------------------------------------------------------------------------
-byte_10616:	dc.b $31
-		dc.b $3D
-		dc.b $42
-		dc.b $45
-		dc.b $31
-		dc.b $4B
-		dc.b $41
-		dc.b $31
-		dc.b $47
-		dc.b $49
-		dc.b $48
-		dc.b $4E
-		dc.b   0
-		dc.b $31
-		dc.b $4A
-		dc.b $4D
-		dc.b $31
-		dc.b   1
+OpponentIntroPals2:
+		dc.b (Pal_CoconutsIntro-Palettes)>>5
+		dc.b (Pal_FranklyIntro-Palettes)>>5
+		dc.b (Pal_DynamightIntro-Palettes)>>5
+		dc.b (Pal_ArmsIntro-Palettes)>>5
+		dc.b (Pal_CoconutsIntro-Palettes)>>5
+		dc.b (Pal_GrounderIntro-Palettes)>>5
+		dc.b (Pal_DavySprocketIntro-Palettes)>>5
+		dc.b (Pal_CoconutsIntro-Palettes)>>5
+		dc.b (Pal_SpikeIntro-Palettes)>>5
+		dc.b (Pal_SirFfuzzyLogikIntro-Palettes)>>5
+		dc.b (Pal_DragonBreathIntro-Palettes)>>5
+		dc.b (Pal_ScratchIntro-Palettes)>>5
+		dc.b (Pal_Black-Palettes)>>5
+		dc.b (Pal_CoconutsIntro-Palettes)>>5
+		dc.b (Pal_HumptyIntro-Palettes)>>5
+		dc.b (Pal_SkweelIntro-Palettes)>>5
+		dc.b (Pal_CoconutsIntro-Palettes)>>5
+		dc.b (Pal_RedYellowPuyos-Palettes)>>5
 unk_10628:	dc.b   0
 		dc.b $30
 		dc.b   0
@@ -27330,7 +27295,7 @@ unk_10B68:	dc.b   3
 		adda.l	#(Pal_RedYellowPuyos-Palettes),a2
 		cmpi.b	#$11,(level).l
 		beq.w	loc_10BB8
-		adda.l	#$60,a2
+		adda.l	#(Pal_2856-Pal_RedYellowPuyos),a2
 
 loc_10BB8:
 		jsr	(FadeToPalette).l
@@ -27361,18 +27326,10 @@ byte_10BDA:	dc.b 0
 		dc.b $FF
 		dc.b   1
 		dc.b   2
-		dc.b   0
-		dc.b   0
-		dc.b $B1
-		dc.b   2
-		dc.b   0
-		dc.b   0
-		dc.b $B1
-		dc.b $52
-		dc.b   0
-		dc.b   0
-		dc.b $B1
-		dc.b   2
+
+		dc.l loc_B102
+		dc.l loc_B152
+		dc.l loc_B102
 
 ; =============== S U B	R O U T	I N E =======================================
 
@@ -27482,15 +27439,15 @@ loc_10CA6:
 		jsr	(FadeToPalette).l
 		move.b	#1,d0
 		move.b	#0,d1
-		lea	(Pal_Grounder).l,a2
+		lea	(Pal_GameIntroGrounder).l,a2
 		jsr	(FadeToPalette).l
 		move.b	#2,d0
 		move.b	#0,d1
-		lea	(Pal_2FB6).l,a2
+		lea	(Pal_Robotnik).l,a2
 		jsr	(FadeToPalette).l
 		move.b	#3,d0
 		move.b	#0,d1
-		lea	(Pal_Robotnik).l,a2
+		lea	(Pal_GameIntroRobotnik).l,a2
 		jsr	(FadeToPalette).l
 		jmp	(ActorDeleteSelf).l
 
@@ -31271,7 +31228,7 @@ sub_123AE:
 		bne.w	locret_1244C
 		clr.l	d0
 		move.b	(opponent).l,d0
-		lea	(byte_6206).l,a1
+		lea	(OpponentPalettes).l,a1
 		move.b	(a1,d0.w),d0
 		lsl.w	#5,d0
 		lea	(Palettes).l,a2
@@ -47724,7 +47681,7 @@ byte_3B080:
 ArtNem_RobotnikShip:
 		incbin	"data/artnem/artnem3B620.bin"
 		even
-byte_3BA82:
+ArtNem_Scratch:
 		incbin	"data/artnem/artnem3BA82.bin"
 		even
 byte_3CC84:	dc.b 6,	0, 0, 0, 0, 0, 1, $11, $13, $19, $21, $91, $1D,	$11, $D2, $15
@@ -47742,7 +47699,7 @@ byte_3CCFC:	dc.b 8,	2, 0, $69, 0, 0, $48, $54, $86,	$44, $74, $47, $44, $A,	$49,
 		dc.b $3F, $80
 byte_3CD1E:	dc.b 8,	0, 0, $8D, 0, 0, $4A, $B5, $3A,	$35, $EB, $91, $AF, $6C, $85, $7B
 		dc.b $E4, $6B, $63, 0, $95, $6C, $D4, $AB, $EA,	$7F
-byte_3CD38:
+ArtNem_Frankly:
 		incbin	"data/artnem/artnem3CD38.bin"
 		even
 byte_3DFCC:	dc.b 6,	0, 0, 0, 0, 0, 1, $80, $10, $11, 2, $D0, $19, $23, $CC,	$FE
@@ -47759,7 +47716,7 @@ byte_3E038:	dc.b $80, 8, $80, 4, $B, $13, 4, $24, $D, $45, $1E, $54, $A, $64, $E
 		dc.b $72, $C6, $64, $34, $55, $E3, $B3,	$BE, $A2, $CA, $2C, $A2, $C9, $FB, $C8,	$5E
 		dc.b $6E, $6E, $59, $5F, $70, $AA, $C1,	$A1, $61, $A4, $3C, $43, $45, $82, $B4,	$2F
 		dc.b $80, 0
-byte_3E08A:
+ArtNem_Coconuts:
 		incbin	"data/artnem/artnem3E08A.bin"
 		even
 byte_3F30C:	dc.b 6,	0, 0, 0, 0, 0, 1, $11, $12, $15, $31, $D1, $1D,	$11, $D1, $19
@@ -47780,7 +47737,7 @@ byte_3F3AC:	dc.b 8,	0, 0, 2, 0, 0, $42, $95, $70, $14, $5D,	$38, 2,	$A5, $4A, $C
 		dc.b $FF, $F0
 byte_3F3CE:	dc.b 8,	0, 0, $B4, 0, 0, $40, $64, $86,	$44, $84, 8, $40, $74, $C7, $44
 		dc.b $7F, $E0
-byte_3F3E0:
+ArtNem_Dynamight:
 		incbin	"data/artnem/artnem3F3E0.bin"
 		even
 byte_4055A:	dc.b 6,	0, 0, 0, 0, 0, 1, 1, $54, $D, $41, $54,	$11, $40, $D5, $D
@@ -47804,7 +47761,7 @@ byte_4061C:	dc.b 8,	0, 0, $6D, 0, 0, $46, $8C, $4C,	$18, $AA, $31, $69, $D5, $8D
 byte_40636:	dc.b 8,	0, 0, $6D, 0, 0, $46, $8C, $4C,	$18, $AA, $31, $69, $D5, $8D, $4C
 		dc.b $45, 4, $50, $54, $C5, $4C, $54, $7F, $80,	0
 byte_40650:	dc.b 8,	0, 0, $93, 0, 0, 1, 3, $CF, $3C, $F0, $FF, $80,	0
-byte_4065E:
+ArtNem_Grounder:
 		incbin	"data/artnem/artnem4065E.bin"
 		even
 byte_41C9A:	dc.b 6,	0, 0, 0, 0, 0, 1, $10, $90, 1, $31, $53, $15, $21, $92,	$21
@@ -47827,7 +47784,7 @@ byte_41D42:	dc.b 8,	0, 0, $8B, 0, 0, $4A, $95, $B2,	0, $27,	$4E, $E6, $8C, $82, 
 		dc.b $4A, $89, $1E, $14, $B4, $B1, $A9,	$D4, $A1, $4E, $B7, $86, $4D, $3B, $2F,	$E0
 byte_41D72:	dc.b 8,	0, 0, $CA, 0, 0, $4C, $24, 0, $4C, $54,	$85, $44, $74, $4F, $37
 		dc.b $F8, 0
-byte_41D84:
+ArtNem_DavySprocket:
 		incbin	"data/artnem/artnem41D84.bin"
 		even
 byte_42C96:	dc.b 6,	0, 0, 0, 0, 0, 1, $10, $D4, $15, $31, $D0, $21,	1, $54,	$11
@@ -47846,7 +47803,7 @@ byte_42D22:	dc.b 8,	0, 0, $53, 0, 0, $4A, $9B, $5A,	$95, $5B, $D3, $AC, $EA, $95
 		dc.b $A0, $14, $68, $29, $4A, $21, $FC,	0
 byte_42D4A:	dc.b 8,	0, 0, $A2, 0, 0, $48, $54, $86,	$40, $84, $48, $40, $84, 4, $44
 		dc.b $14, $45, $40, $F,	$E0, 0
-byte_42D60:
+ArtNem_Spike:
 		incbin	"data/artnem/artnem42D60.bin"
 		even
 byte_444A6:	dc.b 6,	0, 0, 0, 0, 0, 1, $10, $D5, $11, $41, $52, $1D,	2, $10,	$3C
@@ -47866,7 +47823,7 @@ byte_44544:	dc.b 8,	0, 0, $82, 0, 0, $48, $45, 4, $50, $F3,	$CE, $FE, 0
 byte_44552:	dc.b 8,	0, 0, $82, 0, 0, $48, $45, 4, $50, $CA,	$37, $75, $66, $E9, $DE
 		dc.b $D5, $A5, $A5, $83, $5A, $BA, $96,	$25, $2B, $8F, $E0, 0
 byte_4456E:	dc.b 8,	0, 0, $C7, 0, 0, $44, $45, 5, $4C, $74,	8, $40,	$F3, $3F, $80
-byte_4457E:
+ArtNem_DragonBreath:
 		incbin	"data/artnem/artnem4457E.bin"
 		even
 byte_45D24:	dc.b 6,	0, 0, 0, 0, 0, 1, $20, $D4, $11, $13, $CF, $3E,	$E, $5F, $C0
@@ -47888,7 +47845,7 @@ byte_45DEC:	dc.b 8,	0, 0, $8A, 0, 0, $50, $44, $88,	$40, $F0, $E8, $E6, $D7, $AE
 byte_45E06:	dc.b 8,	0, 0, $96, 0, 0, $46, $A6, $A2,	$B5, $76, $50, 5, $A, $BB, $E8
 		dc.b $51, $9F, $AD, $CB, $4A, $A2, $B7,	$65, $2B, $2A, $BE, $74, $AE, $E8, $DE,	$D4
 		dc.b $F9, $A3, $89, $FC
-byte_45E2A:
+ArtNem_Humpty:
 		incbin	"data/artnem/artnem45E2A.bin"
 		even
 byte_46FAA:	dc.b 6,	0, 0, 0, 0, 0, 9, $3A, $20, $A2, $A, $60, $A4, $2A, $62, $A4
@@ -47916,7 +47873,7 @@ byte_470B2:	dc.b 8,	0, 0, $1B, 0, 0, $7D, $DA, $76,	$54, $63, $AA, $DB, $55, $92
 byte_470CC:	dc.b 8,	0, 0, $1A, 0, 0, $4A, $95, $F2,	$D4, $B0, $56, $A5, $88, $85, $1C
 		dc.b $74, $2A, $E4, $A1, $C3, $3D, $1A,	$FA, 0,	$20, $D, $5D, $8E, $24,	$60, $16
 		dc.b $49, $3F, $80, 0
-byte_470F0:
+ArtNem_Robotnik:
 		incbin	"data/artnem/artnem470F0.bin"
 		even
 byte_48712:	dc.b 7,	0, 0, 0, 0, 2, 9, $20, $51, $3C, $F3, $CB, $FE,	0
@@ -47935,7 +47892,7 @@ byte_487AE:	dc.b 8,	0, 0, 0, 0, 2, 9, $20, $51, $3C, $5E, $75, $E3,	$83, $B4, $5
 		dc.b $C7, $E9, $58, $70, $A6, $AA, $4F,	$4E, $CE, $A9, $8D, $3B, $7A, $A7, $7F,	$C0
 byte_487CE:	dc.b 8,	0, 0, 2, 0, 2, 1, $1A, $57, $69, $DF, $BE, $BF,	$9D, $7F, $7A
 		dc.b $DF, $77, $F0, 0
-byte_487E2:
+ArtNem_Skweel:
 		incbin	"data/artnem/artnem487E2.bin"
 		even
 byte_49C22:	dc.b 6,	0, 0, 0, 0, 0, 1, $10, $D5, $D,	$41, $14, $11, $41, $53, $15
@@ -47967,7 +47924,7 @@ byte_49D40:	dc.b 8,	0, 0, $9C, 0, 0, $4C, $25, $43,	$54, $35, $28, $EC, $52, $A9
 		dc.b $96, $D, $1A, $F5,	$39, $58, $E2, $62, $D2, $B4, $4E, $AD,	$BA, $3F, $C0, 0
 byte_49D60:	dc.b 8,	0, 0, $DA, 0, 0, $50, $25, 4, $50, $44,	$C4, $50, $55, 4, $4C
 		dc.b $54, $7F, $80, 0
-byte_49D74:
+ArtNem_SirFfuzzyLogik:
 		incbin	"data/artnem/artnem49D74.bin"
 		even
 byte_4B20A:	dc.b 6,	0, 0, 0, 0, 0, 1, $31, $12, $19, $23, $CF, $3B,	$F8
@@ -47996,7 +47953,7 @@ byte_4B330:	dc.b 8,	0, 0, $21, 0, 0, $52, $A1, $E2,	$54, $F1, $29, $20, $A5, $4F
 		dc.b $AA, $25, $2C, $CE, $1A, $55, $52,	$C0, $E2, $A3, $A7, $7D, $4E, $BB, $1F,	$F0
 byte_4B350:	dc.b 8,	0, 0, $21, 0, 0, $52, $A3, $5A,	$54, $F1, $29, $38, $25, $4F, $22
 		dc.b $AB, $9D, $2C, $CA, $3A, $95, $1E,	$C0, $E3, 1, $AD, $7E, $A, $BC,	$97, $F0
-byte_4B370:
+ArtNem_Arms:
 		incbin	"data/artnem/artnem4B370.bin"
 		even
 byte_4C2D4:	dc.b 6,	0, 0, 0, 0, 0, 1, $B0, $D4, $15, $31, $51, $3C,	$DF, $E0, 0
