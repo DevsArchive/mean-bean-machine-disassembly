@@ -13,7 +13,6 @@
 ; --------------------------------------------------------------
 
 	rsreset
-
 aField0			rs.b	1
 aField1			rs.b	1
 aAddr			rs.l	1
@@ -45,7 +44,7 @@ aField26		rs.b	1
 aField27		rs.b	1
 aField28		rs.b	1
 aField29		rs.b	1
-aField2A		rs.b	1
+aPlayerID		rs.b	1
 aField2B		rs.b	1
 aField2C		rs.b	1
 aField2D		rs.b	1
@@ -67,11 +66,33 @@ aField3F		rs.b	1
 aSize			rs.b	0
 
 ; --------------------------------------------------------------
+; Puyo field structure
+; --------------------------------------------------------------
+
+PUYO_FIELD_COLS		EQU	6
+PUYO_FIELD_ROWS		EQU	14
+
+	rsreset
+pPuyos			rs.w	PUYO_FIELD_COLS
+pPlaceablePuyos		rs.w	PUYO_FIELD_COLS
+pVisiblePuyos		rs.w	PUYO_FIELD_COLS*(PUYO_FIELD_ROWS-2)
+pUnk1			rs.w	PUYO_FIELD_COLS*(PUYO_FIELD_ROWS-2)
+pPuyosCopy		rs.w	PUYO_FIELD_COLS
+pPlaceablePuyosCopy	rs.w	PUYO_FIELD_COLS
+pVisiblePuyosCopy	rs.w	PUYO_FIELD_COLS*(PUYO_FIELD_ROWS-2)
+pUnk6			rs.b	$B4
+pUnk2			rs.b	8
+pCount			rs.w	1
+pUnk3			rs.b	(PUYO_FIELD_ROWS-2)
+pUnk4			rs.b	8*(PUYO_FIELD_ROWS-2)
+pUnk5			rs.b	8*(PUYO_FIELD_ROWS-2)
+pSize			rs.b	0
+
+; --------------------------------------------------------------
 ; RAM definitions
 ; --------------------------------------------------------------
 
 	rsset	RAM_START
-
 puyo_dec_buffer		rs.b	$100
 puyo_dec_vdp_buf	rs.l	1
 
@@ -112,13 +133,13 @@ hblank_buffer_ptr	rs.l	1
 hblank_counter		rs.w	1
 
 			rs.b	1
-byte_FF0143		rs.b	1
+p1_paused		rs.b	1
 
 player_1_flags		rs.b	1
 player_2_flags		rs.b	1
 
-byte_FF0146		rs.b	$240
-byte_FF0386		rs.b	$240
+saved_puyo_field_p1	rs.b	$240
+saved_puyo_field_p2	rs.b	$240
 
 frame_count		rs.w	1
 			rs.b	2
@@ -306,12 +327,9 @@ byte_FF1D1E		rs.b	4*12
 byte_FF1D4E		rs.b	$A
 byte_FF1D58		rs.b	$A
 
-puyo_field_p1		rs.b	$29C
-puyo_count_p1		rs.w	1
-			rs.b	$CC
-puyo_field_p2		rs.b	$29C
-puyo_count_p2		rs.w	1
-			rs.b	$CC
+puyo_field_p1		rs.b	pSize
+puyo_field_p2		rs.b	pSize
+
 			rs.b	$BCA
 
 eni_tilemap_buffer	rs.b	$1000
