@@ -437,7 +437,7 @@ WaitDMA:
 ; --------------------------------------------------------------
 
 InitGame:
-	lea	is_japan,a1
+	lea	sound_test_enabled,a1
 	jsr	sub_23566
 	cmp.w	stack_base,d0
 	beq.w	.Initialize
@@ -521,10 +521,12 @@ Exception:
 	bra.s	.Loop
 
 ; --------------------------------------------------------------
-; Clear carry flag
+; In the arcade version of Puyo Puyo, this function checked
+; if a coin was inserted into the machine. Obviously, it
+; was dummied out for the Mega Drive version.
 ; --------------------------------------------------------------
 
-ClearCarry:
+CheckCoinInserted:
 	CLEAR_CARRY
 	rts
 
@@ -642,12 +644,12 @@ HandleTime:
 	clr.l	d0
 	move.w	time_frames,d0
 	divu.w	#60,d0
-	move.w	d0,time_seconds
+	move.w	d0,time_total_secs
 	
 	clr.l	d0
-	move.w	time_seconds,d0
+	move.w	time_total_secs,d0
 	divu.w	#60,d0
-	move.l	d0,time_minutes
+	move.l	d0,time_seconds
 
 .TimeDisabled:
 	rts
@@ -2888,7 +2890,7 @@ BC_GameOver:
 	BJMP	BC_HighScores
 
 BC_Ending:
-	BWRITE	is_japan, $FFFF
+	BWRITE	sound_test_enabled, $FFFF
 	BRUN	sub_23536
 	BVDP	1
 	BRUN	DisableSHMode
@@ -4569,7 +4571,7 @@ loc_3C00:
 
 loc_3C1A:
 	clr.w	(time_frames).l
-	clr.w	(word_FF05D0).l
+	clr.w	(time_minutes).l
 	clr.b	(byte_FF1965).l
 	tst.b	(level_mode).l
 	bne.w	loc_3C40
@@ -10916,7 +10918,7 @@ loc_7ACE:
 
 loc_7B2C:
 	jsr	(sub_DF74).l
-	move.w	(time_seconds).l,d0
+	move.w	(time_total_secs).l,d0
 	cmpi.w	#$3E8,d0
 	bcs.w	loc_7B44
 	move.w	#$3E7,d0
@@ -11329,7 +11331,7 @@ loc_7F70:
 	bsr.w	sub_56C0
 	btst	#7,d0
 	beq.w	loc_8044
-	jsr	(ClearCarry).l
+	jsr	(CheckCoinInserted).l
 	bcs.w	loc_8044
 	bra.w	loc_80B8
 ; ---------------------------------------------------------------------------
@@ -11345,7 +11347,7 @@ loc_8044:
 loc_805E:
 	bsr.w	sub_7282
 	move.w	#$8008,d0
-	jsr	(ClearCarry).l
+	jsr	(CheckCoinInserted).l
 	bcs.w	loc_8074
 	move.w	#$8009,d0
 
@@ -11419,7 +11421,7 @@ loc_813C:
 	bsr.w	sub_56C0
 	btst	#7,d0
 	beq.w	loc_816E
-	jsr	(ClearCarry).l
+	jsr	(CheckCoinInserted).l
 	bcs.w	loc_816E
 	bra.w	loc_81AE
 ; ---------------------------------------------------------------------------
@@ -11435,7 +11437,7 @@ loc_816E:
 loc_8188:
 	bsr.w	sub_7282
 	move.w	#$8017,d0
-	jsr	(ClearCarry).l
+	jsr	(CheckCoinInserted).l
 	bcc.w	loc_819E
 	move.b	#7,d0
 
@@ -14200,8 +14202,8 @@ loc_9998:
 
 sub_99AA:
 	lea	(unk_99F8).l,a1
-	move.w	(time_minutes).l,d0
-	move.w	(word_FF05D0).l,d1
+	move.w	(time_seconds).l,d0
+	move.w	(time_minutes).l,d1
 	beq.w	loc_99CE
 	cmpi.b	#1,(level_mode).l
 	bne.w	loc_99CE
@@ -14217,7 +14219,13 @@ loc_99DA:
 	lsl.w	#2,d1
 	or.w	d1,d0
 	lsl.w	#1,d0
+	
+	; In the arcade version of Puyo Puyo, garbage drops would get
+	; more intense as time went on in a stage. This was dummied
+	; out in the Mega Drive version.
+	;move.w	(a1,d0.w),d1
 	move.w	#$46,d1
+
 	clr.l	d0
 	move.w	$10(a0),d0
 	divu.w	d1,d0
@@ -21382,7 +21390,7 @@ sub_DAC8:
 	jsr	(GetCtrlData).l
 	btst	#7,d0
 	beq.w	loc_DAE4
-	jsr	(ClearCarry).l
+	jsr	(CheckCoinInserted).l
 	bcs.w	loc_DAE4
 	bra.w	loc_DB4A
 ; ---------------------------------------------------------------------------
@@ -21592,7 +21600,7 @@ loc_DCBA:
 
 loc_DD00:
 	jsr	(ActorBookmark).l
-	jsr	(ClearCarry).l
+	jsr	(CheckCoinInserted).l
 	move.b	$36(a0),d0
 	ori.b	#$80,d0
 	move.w	#$1800,d1
@@ -21702,7 +21710,7 @@ loc_DDEA:
 
 
 sub_DE0E:
-	jsr	(ClearCarry).l
+	jsr	(CheckCoinInserted).l
 	bcs.w	loc_DE1E
 	jmp	(ActorDeleteSelf).l
 ; ---------------------------------------------------------------------------
@@ -22050,7 +22058,7 @@ ActTitleHandler:
 
 ; FUNCTION CHUNK AT 0000ECE8 SIZE 0000004A BYTES
 
-	move.w	#$FFFF,(is_japan).l
+	move.w	#$FFFF,(sound_test_enabled).l
 	bsr.w	CheckIfJapan
 	move.b	(p1_ctrl_press).l,d0
 	or.b	(p2_ctrl_press).l,d0
@@ -22068,7 +22076,7 @@ ActTitleHandler:
 .loc_E142:
 	btst	#7,d0
 	beq.w	.End
-	jsr	(ClearCarry).l
+	jsr	(CheckCoinInserted).l
 	bcc.w	loc_ECE8
 
 .End:
@@ -23357,9 +23365,9 @@ CheckIfJapan:
 	move.b	CONSOLE_VER,d0
 	andi.b	#$C0,d0
 	beq.s	locret_ECDA
-	move.w	(is_japan).l,d0
+	move.w	(sound_test_enabled).l,d0
 	not.w	d0
-	move.w	d0,(is_japan).l
+	move.w	d0,(sound_test_enabled).l
 	jmp	(sub_23536).l
 ; ---------------------------------------------------------------------------
 
@@ -31594,7 +31602,7 @@ sub_12674:
 	lea	(byte_FF1D58).l,a6
 
 loc_12688:
-	cmpi.w	#2,(word_FF05D0).l
+	cmpi.w	#2,(time_minutes).l
 	bcs.w	loc_1269E
 	move.b	#1,0(a6)
 	bra.w	loc_126D6
@@ -46233,7 +46241,7 @@ OptionsCtrl:
 	cmp.b	(swap_controls).l,d0
 	bne.w	.CheckButtons
 	move.b	#6,d2
-	tst.w	(is_japan).l
+	tst.w	(sound_test_enabled).l
 	beq.w	.CheckButtons
 	move.b	#7,d2
 
@@ -46578,7 +46586,7 @@ OptStr_InputTest2:dc.b "input test"
 
 
 sub_233F8:
-	tst.w	(is_japan).l
+	tst.w	(sound_test_enabled).l
 	beq.w	locret_23414
 	move.b	#7,d0
 	move.w	#$B9E,d5
@@ -46696,7 +46704,7 @@ LockoutBypassCode:
 
 sub_23536:
 	movem.l	d0-d3/a1-a2,-(sp)
-	lea	(is_japan).l,a1
+	lea	(sound_test_enabled).l,a1
 	bsr.w	sub_23566
 	move.w	d0,(stack_base).l
 	lea	(stack_base).l,a1

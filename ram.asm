@@ -145,10 +145,9 @@ frame_count		rs.w	1
 			rs.b	2
 
 time_frames		rs.w	1
+time_total_secs		rs.w	1
 time_seconds		rs.w	1
 time_minutes		rs.w	1
-
-word_FF05D0		rs.w	1
 
 vscroll_buffer		rs.b	$50
 hscroll_buffer		rs.b	$400
@@ -422,7 +421,7 @@ stack			rs.b	$C00
 stack_base		rs.b	0
 
 			rs.b	2
-is_japan		rs.w	1
+sound_test_enabled	rs.w	1
 
 high_scores		rs.b	$A0
 
